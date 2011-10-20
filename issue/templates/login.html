@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div>
+  <h3>Login using <a href="http://oauth.net/" title="OAuth">OAuth</a> from:</h3>
+  <ul>
+  % for name in social_auth['backends']['oauth']:
+    <li><a rel="nofollow" href="${ reverse_url('socialauth_begin', args=(name,))}?next=${request.REQUEST['next']}">${ name }</a></li>
+  % endfor
+  </ul>
+</div>
+
+<div>
+  <h3>Login using <a href="http://tools.ietf.org/html/draft-ietf-oauth-v2-10" title="OAuth2">OAuth2</a> from:</h3>
+  <ul>
+  % for name in social_auth['backends']['oauth2']:
+    <li><a rel="nofollow" href="${ reverse_url('socialauth_begin', args=(name,))}?next=${request.REQUEST['next']}">${name}</a></li>
+  % endfor
+  </ul>
+</div>
+
+<div>
+  <h3>Login using <a href="http://openid.net/" title="OpenId">OpenId</a> from:</h3>
+  <ul>
+  % for name in social_auth['backends']['openid']:
+    <li>
+    % if name != "livejournal" and name != "openid":
+      <a rel="nofollow" href="${ reverse_url('socialauth_begin', args=(name,))}?next=${request.REQUEST['next']}">${ name }</a>
+    % else:
+      % if name == "livejournal":
+      <form action="${ reverse_url('socialauth_begin', args=('livejournal',))}?next=${request.REQUEST['next']}" method="post">
+          <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
+        <input type="hidden" value="${request.REQUEST['next']}" name="next" />
+        <div>
+          <label for="openid_lj_user">LiveJournal user:</label>
+          <input id="openid_lj_user" type="text" value="" name="openid_lj_user" />
+          <input type="submit" value="Login"/>
+        </div>
+      </form>
+      % else:
+        % if name == "openid":
+        <form action="${ reverse_url('socialauth_begin', args=('openid',))}?next=${request.REQUEST['next']}" method="post">
+          <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
+          <input type="hidden" value="${request.REQUEST['next']}" name="next" />
+          <div>
+            <label for="openid_identifier">Other provider</label>
+            <input id="openid_identifier" type="text" value="" name="openid_identifier" />
+            <input type="submit" value="Login" />
+          </div>
+          <p class="helptext">Like your personal <a href="https://www.myopenid.com/" title="My OpenId">myopenid</a></p>
+        </form>
+        % endif
+      % endif
+    % endif
+    </li>
+  % endfor
+  </ul>
+</div>      
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title><%block name="title"/></title> <%block name="head"/>
+<link rel="shortcut icon" href="/static/images/forget_me_not_pink.png" />
+<style type="text/css">
+a {	text-decoration: none }
+.header .logo a { color: #562B1A; font-size: 16pt;  }
+.navigation { padding: 5px; background:#FEB21E; color: #401707; font-size: 10.5pt}
+.navigation a { color: #401707; margin: 0 10px;}
+.navigation a:hover { color: #FEF7A1; }
+</style>
+</head>
+<body>
+	<div style="margin: 0 auto; width: 800px">
+		<div class="header" style="overfloat: hidden">
+			<div class="profile" style="float: right; ">
+				<a href="/accounts/login">login</a>
+			</div>
+			<div class="logo" style="">
+				<a href="/" style="height: 40px; line-height: 40px; padding: 10px 0"><img
+					src="/static/images/forget_me_not_pink.png" alt="forget me not"
+					style="vertical-align: bottom; width: 40px; margin: 5px;"><span>대한민국
+						이슈 트래커</span> </a>
+			</div>
+		</div>
+		<div class="navigation" style="">
+			<a href="/issues">전체</a>
+			<a href="/issues?status=voting">투표 중</a>
+			<a href="/issues?status=voting">기부 청원</a>
+			<a href="/issues?status=solved">해결</a>
+			<a href="/issues/_/new" style="float: right"><img src="/static/images/edit_icon.png" style="width: 16px; vertical-align: top">이슈 올리기</a>
+		</div>
+		
+		${self.body()}
+	</div>
+</body>
+</html>

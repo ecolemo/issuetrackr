@@ -1,0 +1,23 @@
+<%inherit file="/base.html"/>
+<%block name="head">
+${parent.head()}
+<style type="text/css">
+table {border-collapse: collapse; width: 100%}
+table td { border-bottom: 1px solid #562C1C; }
+table th { text-align: left; }
+.thumbnail_cell { width: 150px; padding: 10px }
+</style>
+</%block>
+<table style="">
+<tbody>
+% for item in objects:
+<tr>
+	<td rowspan="2" class="thumbnail_cell"><img src="/static/images/forget_me_not.png" style="height: 120px"></td>
+	<th>${item.title}</th>
+</tr>
+<tr>
+	<td>${item.content}</td>
+</tr>
+% endfor
+</tbody>
+</table>
