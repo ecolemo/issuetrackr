@@ -1,5 +1,18 @@
+<%inherit file="/base.html"/>
 <%block name="head">
 <script type="text/javascript" src="/static/jquery/jquery-1.5.2.min.js"></script>
 </%block>
 <h1>${issue.title}</h1>
 <div>${issue.content}</div>
+<hr>
+<h3>댓글</h3>
+% for comment in issue.comment_set.order_by('-updated'):
+<div>${comment.writer.username}</div>
+<div>${comment.content}</div>
+% endfor
+<form action="/comments/_/create" method="post">
+<fieldset>
+<textarea name="content" style="width: 100%"></textarea>
+<input type="submit" value="올리기">
+</fieldset>
+</form>

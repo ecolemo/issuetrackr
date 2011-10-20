@@ -13,7 +13,7 @@ table th { text-align: left; }
 % for item in objects:
 <tr>
 	<td rowspan="2" class="thumbnail_cell"><img src="/static/images/forget_me_not.png" style="height: 120px"></td>
-	<th>${item.title}</th>
+	<th><a href="/issues/${item.id}">${item.title}</a></th>
 </tr>
 <tr>
 	<td>${item.content}</td>

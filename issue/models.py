@@ -11,6 +11,7 @@ class Issue(models.Model):
     
 class Comment(models.Model):
     writer = models.ForeignKey(User)
+    issue = models.ForeignKey(Issue)
     content = models.TextField()
     status = models.CharField(max_length=50, default='new')
     created = models.DateTimeField(auto_now_add=True)

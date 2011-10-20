@@ -1,3 +1,4 @@
+<%inherit file="/base.html"/>
 <%block name="head">
 <script type="text/javascript" src="/static/jquery/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
@@ -7,6 +8,7 @@ $(document).ready(function() {
 })
 </script>
 </%block>
+<h1>새로운 이슈 올리기</h1>
 <form action="/issues/_/create" method="post">
     <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
 	제목
