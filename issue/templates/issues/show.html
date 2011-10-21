@@ -1,0 +1,34 @@
+<%inherit file="/base.html"/>
+<%block name="head">
+<script type="text/javascript" src="/static/jquery/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	CKEDITOR.replace( 'editor', { extraPlugins: 'tabindent'} )
+})
+</script>
+</%block>
+<h1>
+	<span class="status_${issue.status}">${issue.status}</span>
+	${issue.title}
+	<span class="writer_info">${issue.writer} ${issue.updated}</span>
+</h1>
+<div class="issue_content">${issue.content}</div>
+<div style="margin-top: 10px; text-align: center;">
+	<a href="/issues/">목록</a>
+	|
+	<a href="/issues/${issue.id}/edit">수정</a>
+</div>
+<h3>댓글</h3>
+% for comment in issue.comment_set.order_by('-updated'):
+<div class="comment_writer">${comment.writer.username} <span style="float:right">${comment.updated}</span></div>
+<div class="comment_content">${comment.content}</div>
+% endfor
+<form action="/comments/_/create" method="post">
+<div>
+<input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
+<input type="hidden" name="issue" value="${issue.id}">
+<textarea id="editor" name="content" style="width: 100%; height: 100px"></textarea>
+<input type="submit" value="댓글 쓰기">
+</div>
+</form>

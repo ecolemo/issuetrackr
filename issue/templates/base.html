@@ -10,6 +10,13 @@ a {	text-decoration: none }
 .navigation { padding: 5px; background:#FEB21E; color: #401707; font-size: 10.5pt}
 .navigation a { color: #401707; margin: 0 10px;}
 .navigation a:hover { color: #FEF7A1; }
+h1 { color: #562C1C; font-size: 16pt; padding: 5px 5px }
+h3 { font-size: 12pt; padding: 0 10px; }
+h1 .writer_info { font-size: 10pt; float:right; }
+.status_new { color: white; margin: 5px; vertical-align:middle; font-size: 11pt; padding: 3px 5px; background-color: #FF881F; border: 1px solid #8F2800}
+.issue_content { padding: 10px; border-top: 1px solid #562C1C; border-bottom: 1px solid #562C1C;}
+.comment_writer { background: #FFD25E; padding: 10px; font-size: 10pt }
+.comment_content { border-bottom: 1px solid #562C1C; margin-bottom: 10px; padding: 10px }
 </style>
 </head>
 <body>
@@ -32,8 +39,12 @@ a {	text-decoration: none }
 			<a href="/issues?status=solved">해결된 이슈들</a>
 			<a href="/issues/_/new" style="float: right"><img src="/static/images/edit_icon.png" style="width: 16px; vertical-align: top">이슈 올리기</a>
 		</div>
-		
-		${self.body()}
+
+		<div class="sidebar">
+		</div>
+		<div class="main">
+			${self.body()}
+		</div>
 	</div>
 </body>
 </html>

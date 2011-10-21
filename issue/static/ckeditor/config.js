@@ -12,7 +12,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ] },
 		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
 		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks','-','About', '-', 'Source' ] },
+//		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks','-','About', '-', 'Source' ] },
 //		{ name: 'forms', items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
 	];
 	config.keystrokes.push([CKEDITOR.CTRL + 32, 'WikiLink'])

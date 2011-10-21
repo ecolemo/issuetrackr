@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'djangobp',
     'social_auth',
     'issuetrackr.issue',
     # Uncomment the next line to enable the admin:
