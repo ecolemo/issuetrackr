@@ -17,5 +17,6 @@ CKEDITOR.editorConfig = function( config ) {
 	];
 	config.keystrokes.push([CKEDITOR.CTRL + 32, 'WikiLink'])
 	config.tabSpaces = 4;
-	config.removePlugins = 'tab'
+	config.removePlugins = 'tab';
+	config.filebrowserUploadUrl = '/'
 }

@@ -16,3 +16,11 @@ class Comment(models.Model):
     status = models.CharField(max_length=50, default='new')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    
+class Attachment(models.Model):
+    writer = models.ForeignKey(User)
+    issue = models.ForeignKey(Issue)
+    filename = models.CharField(max_length=200)
+    
+    def url(self):
+        return '/attachments/%d' % self.id
