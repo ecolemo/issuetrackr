@@ -1,20 +1,21 @@
-﻿CKEDITOR.plugins.add( 'simpleimage',
+CKEDITOR.plugins.add( 'simpleimage',
 {
 	init: function( editor )
 	{
 		// Plugin logic goes here...
-		
-		editor.addCommand('insertCodeBlock', {
+
+		editor.addCommand('insertSimpleImage', {
 			exec : function( editor )
-			{    
-				editor.insertHtml( '<pre class="wikicode">&lt;%  %&gt;</pre>' );
+			{
+                // TODO
+
 			}
 		})
 		editor.addCommand( 'simpleImageDialog', new CKEDITOR.dialogCommand( 'simpleImageDialog' ) );
 		editor.ui.addButton('SimpleImage', {
-			label: 'Wiki Link',
+			label: 'Insert Image',
 			command: 'simpleImageDialog',
-			icon: this.path + 'wikilink_icon.png'
+			icon: this.path + 'simpleimage.png'
 		})
 	}
 } );
@@ -22,7 +23,7 @@
 CKEDITOR.dialog.add( 'simpleImageDialog', function( editor )
 		{
 			return {
-				title : 'Wiki Link',
+				title : 'Insert Image',
 				minWidth : 400,
 				minHeight : 200,
 				contents : [
@@ -32,18 +33,26 @@ CKEDITOR.dialog.add( 'simpleImageDialog', function( editor )
 						elements :
 						[
 							{
-								type : 'html',
-								html : 'Wiki Link'		
-							},
-							{
 								type : 'text',
-								id : 'page_title',
-								label : 'Page Title',
+								id : 'url',
+								label : '이미지 URL',
 								required : true,
 								commit : function( data ) {
-									data.page_title = this.getValue();
+									data.url = this.getValue();
 								}
-							}						 	// UI elements of the Settings tab.
+							},
+                            {
+                      			type : 'file',
+                      			id : 'upload',
+                      			label : '이미지 올리기',
+                      			style: 'height:40px',
+                      			size : 38
+                      		},
+                            {
+                                type : 'button',
+                                id : 'uploadButton',
+                                label : editor.lang.image.btnUpload
+                            }
 						]
 					}
 				],
