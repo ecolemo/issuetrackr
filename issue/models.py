@@ -18,9 +18,18 @@ class Comment(models.Model):
     updated = models.DateTimeField(auto_now=True)
     
 class Attachment(models.Model):
+    storage_path = '~/issuetrackr_files'
+    
     writer = models.ForeignKey(User)
     issue = models.ForeignKey(Issue)
     filename = models.CharField(max_length=200)
+    size = models.IntegerField()
+    created = models.DateTimeField(auto_now_add=True)
     
+    @property
     def url(self):
         return '/attachments/%d' % self.id
+    
+    @property
+    def file_object(self):
+        return file(self.storage_path + '/' + self.id, 'rw')
