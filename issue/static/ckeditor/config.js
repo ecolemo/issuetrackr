@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'paragraph', items : [ 'Format', 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
 		'/',
 		{ name: 'links', items : [ 'WikiLink', 'Link','Unlink','Anchor', 'WikiCodeBlock' ] },
-		{ name: 'insert', items : [ 'SimpleImage','Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ] },
+		{ name: 'insert', items : [ 'SimpleImage','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe', 'Image' ] },
 		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
 		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
 //		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks','-','About', '-', 'Source' ] },
