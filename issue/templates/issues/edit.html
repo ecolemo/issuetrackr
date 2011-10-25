@@ -4,16 +4,32 @@
 <script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	CKEDITOR.replace( 'editor', {} )
+	CKEDITOR.replace( 'issue_content', {} )
 })
 </script>
 </%block>
 <h1>이슈 수정하기</h1>
 <form action="/issues/${issue.id}/update" method="post">
-    <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
-	제목
-	<input type="text" name="title" value="${issue.title}">
-	내용
-	<textarea id="editor" name="content" style="width: 100%; height: 300px;">${issue.content}</textarea>
-	<input type="submit" value="완료">
+<input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
+<table class="edit">
+<tbody>
+	<tr>
+		<th style="width: 80px"><label for="issue_title">제목</label></th>
+		<td><input id="issue_title" type="text" name="title" value="${issue.title}"></td>
+	</tr>
+	<tr>
+		<th><label for="issue_content">내용</label></th>
+		<td><textarea id="issue_content" name="content" style="width: 100%; height: 300px;">${issue.content}</textarea></td>
+	</tr>
+	<tr>
+		<th><label for="issue_tags">태그</label></th>
+		<td><input id="issue_tags" name="tags" type="text"></td>
+	</tr>
+	
+</tbody>
+</table>
+<fieldset>
+	<input type="submit" value="등록">
+</fieldset>
 </form>
+
