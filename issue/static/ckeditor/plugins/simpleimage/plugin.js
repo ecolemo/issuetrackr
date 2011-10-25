@@ -20,6 +20,7 @@
 
 CKEDITOR.dialog.add('simpleImageDialog', function(editor) {
     return {
+    	id:'simpleImageDialog',
         title:'Insert Image',
         minWidth:400,
         minHeight:200,
@@ -37,7 +38,10 @@ CKEDITOR.dialog.add('simpleImageDialog', function(editor) {
                         required:true,
                         commit:function(data) {
                             data.url = this.getValue();
-                        }
+                        },
+                    	setup:function(data) {
+                    		this.setValue(data.url)
+                    	}
                     },
                     {
                         type:'file',
@@ -57,19 +61,19 @@ CKEDITOR.dialog.add('simpleImageDialog', function(editor) {
             }
         ],
         onLoad:function() {
+        	var dialog = this
             $('.cke_dialog_ui_input_file').load(function() {
-                bodyHTML = this.contentWindow.document.body.innerHTML
+                var bodyHTML = this.contentWindow.document.body.innerHTML
                 if (bodyHTML.indexOf('<') < 0) {
-                    alert($('.url_input'))
-                    $('.').val(bodyHTML);
+                	var data = { url:bodyHTML }
+                	dialog.setupContent(data)
                 }
             })
         },
         onOk:function() {
-            var dialog = this, data = {}, link = editor.document.createElement('a');
+            var dialog = this, data = {}, link = editor.document.createElement('img');
             this.commitContent(data);
-            link.setAttribute('href', '/' + data.page_title);
-            link.setHtml(data.page_title)
+            link.setAttribute('src', data.url);
             editor.insertElement(link)
         }
     };

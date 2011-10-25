@@ -9,7 +9,7 @@ $(document).ready(function() {
 </script>
 </%block>
 <h1>이슈 수정하기</h1>
-<form action="/issues/_/update" method="post">
+<form action="/issues/${issue.id}/update" method="post">
     <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
 	제목
 	<input type="text" name="title" value="${issue.title}">

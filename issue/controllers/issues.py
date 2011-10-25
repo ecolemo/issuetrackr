@@ -30,7 +30,9 @@ def edit(request, resource_id):
 
 def update(request, resource_id):
     issue = Issue.objects.get(id=resource_id)
-    issue.update(title=request.POST['title'], content=request.POST['content'])
+    issue.title = request.POST['title']
+    issue.content=request.POST['content']
+    issue.save()
     return redirect('/issues/%d' % issue.id)
 
 def destroy(request, resource_id):
