@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import os
 
 class Issue(models.Model):
     writer = models.ForeignKey(User)
@@ -18,7 +19,7 @@ class Comment(models.Model):
     updated = models.DateTimeField(auto_now=True)
     
 class Attachment(models.Model):
-    storage_path = '~/issuetrackr_files'
+    storage_path = os.environ['HOME'] + '/issuetrackr_files'
     
     writer = models.ForeignKey(User)
     issue = models.ForeignKey(Issue)
@@ -32,4 +33,10 @@ class Attachment(models.Model):
     
     @property
     def file_object(self):
-        return file(self.storage_path + '/' + self.id, 'rw')
+        return file(self.storage_path + '/%d' % self.id, 'rw')
+    
+    def save_file(self, f):
+        destination = open('%s/%d' % (self.storage_path, self.id), 'wb')
+        for chunk in f.chunks():
+            destination.write(chunk)
+        destination.close()
