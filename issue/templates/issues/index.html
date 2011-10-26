@@ -28,6 +28,10 @@
         imgs = [str(e) for e in set([img['src'] for img in soup('img')])]
 
         return ''.join(["""<img src='%s' style='height:120px;'>"""%(e) for e in imgs])
+
+    def avatar(email):
+        import md5
+        return """<img src="http://gravatar.com/avatar/%s?s=50">""" % (md5.new(email).hexdigest())
 %>
 
 <%inherit file="/base.html"/>
@@ -52,7 +56,16 @@ table th { text-align: left; }
                 <td><span class="issue_title"><a href="/issues/${item.id}">${item.title}</a></span></td>
             </tr>
             <tr>
-                <td>${item.content|puretext,summary}</td>
+                <td>
+                    ${item.content|puretext,summary}
+                    <div class="profile">
+                        % if request.user.is_authenticated():
+                            ${item.writer.email|avatar}
+                            ${item.writer}
+                            ${item.updated}
+                        % endif
+                    </div>
+                </td>
             </tr>
         </table>
     </td>
