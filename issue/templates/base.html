@@ -44,6 +44,8 @@ resolved_count = Issue.objects.filter(status='resolved').count()
 					<a href="/accounts/login?next=/issues" style="margin-left: 5px">Login</a>
 				% endif
 			</div>
+
+            <%block name="sidebar_content">
 			<div class="buttons" style="text-align: center; margin-top: 20px;">
 				<a href="/issues/_/new" style="padding: 10px 36px; background: url(/static/images/button_bg.png) center center no-repeat"><img src="/static/images/edit_icon.png" style="width: 16px; vertical-align: middle">이슈 올리기</a>
 			</div>
@@ -56,6 +58,7 @@ resolved_count = Issue.objects.filter(status='resolved').count()
 				<h5>투표 중</h5>
 				투표 중인 이슈 없음.
 			</div>
+            </%block>
 			<div>
 				<h5>hosted by <a href="http://ecolemo.com"><img style="width: 100px; vertical-align: bottom;" src="/static/images/ecolemo_logo.png"></a></h5>
 				
