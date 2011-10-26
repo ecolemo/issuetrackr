@@ -1,0 +1,34 @@
+<%inherit file="/base.html"/>
+<%block name="head">
+${parent.head()}
+<style type="text/css">
+table {border-collapse: collapse; width: 100%}
+table td { border-bottom: 1px solid #562C1C; }
+table th { text-align: left; }
+.thumbnail_cell { width: 150px; padding: 10px }
+</style>
+</%block>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script language="javascript">
+    function presentMsg(msg) {
+        $('#scrap').append("<span>title : " + msg['title'] + "</span><br/>");
+
+        images = msg['images'];
+        for (var i in images) {
+            var image = images[i];
+            var html = "<img style='max-width:120px; max-height:120px;' src='/scraper/image/?url="+ image['url'] +
+                    "'> - width : "+image['width']+", height : " + image['height'] + "<br/>";
+            $('#scrap').append(html);
+        }
+    }
+
+    $(function() {
+        $.ajax({
+            url: '/scraper/_/scrap',
+            data: ({url: 'http://naver.com'} ),
+            success: function(msg) { presentMsg(msg); },
+            failure: function(msg) { alert(msg); }
+        });
+    });
+</script>
+<div id="scrap"></div>
