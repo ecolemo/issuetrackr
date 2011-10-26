@@ -1,3 +1,35 @@
+<%!
+    def strip_tags(html, invalid_tags):
+        from BeautifulSoup import BeautifulSoup, NavigableString
+        soup = BeautifulSoup(html)
+        for tag in soup.findAll(True):
+            if tag.name in invalid_tags:
+                s = ""
+                for c in tag.contents:
+                    if not isinstance(c, NavigableString):
+                        c = strip_tags(unicode(c), invalid_tags)
+                    s += unicode(c)
+                tag.replaceWith(s)
+        return soup.text
+
+    def puretext(text):
+        invalidTags = ['b', 'i', 'u']
+        return strip_tags(text,invalidTags)
+
+    def summary(text):
+        limit = 200
+        result = text[:min(len(text), limit-3)]
+        if len(text) > limit-3: result += "..."
+        return result
+
+    def images(text):
+        from BeautifulSoup import BeautifulSoup
+        soup = BeautifulSoup(text)
+        imgs = [str(e) for e in set([img['src'] for img in soup('img')])]
+
+        return ''.join(["""<img src='%s' style='height:120px;'>"""%(e) for e in imgs])
+%>
+
 <%inherit file="/base.html"/>
 <%block name="head">
 ${parent.head()}
@@ -6,17 +38,24 @@ table {border-collapse: collapse; width: 100%}
 table td { border-bottom: 1px solid #562C1C; }
 table th { text-align: left; }
 .thumbnail_cell { width: 150px; padding: 10px }
+.issue_title { text-align: left; background-color: #FFEECC; border: 1px solid #562C1C; font-size: 36px; color: #000000; }
 </style>
 </%block>
 <table style="">
 <tbody>
 % for item in objects:
 <tr>
-	<td rowspan="2" class="thumbnail_cell"><img src="/static/images/forget_me_not.png" style="height: 120px"></td>
-	<th><a href="/issues/${item.id}">${item.title}</a></th>
-</tr>
-<tr>
-	<td>${item.content}</td>
+	<td class="thumbnail_cell">${item.content|images}</td>
+    <td class="">
+        <table style="border:1px solid #CCEEFF; height:100%; vertical-align:top;">
+            <tr>
+                <td><span class="issue_title"><a href="/issues/${item.id}">${item.title}</a></span></td>
+            </tr>
+            <tr>
+                <td>${item.content|puretext,summary}</td>
+            </tr>
+        </table>
+    </td>
 </tr>
 % endfor
 </tbody>
