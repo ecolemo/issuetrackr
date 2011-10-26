@@ -1,0 +1,21 @@
+<%inherit file="/base.html"/>
+<%block name="head">
+${parent.head()}
+<style type="text/css">
+table {border-collapse: collapse; width: 100%}
+table td { border-bottom: 1px solid #562C1C; }
+table th { text-align: left; }
+.thumbnail_cell { width: 150px; padding: 10px }
+.issue_title { text-align: left; background-color: #FFEECC; border: 1px solid #562C1C; font-size: 36px; color: #000000; }
+</style>
+</%block>
+<table style="">
+<tbody>
+% for tag in tags:
+<tr>
+	<td class="thumbnail_cell"><a href="/issues?tag=${tag.name}">${tag.name}</a></td>
+    <td class="">${tag.issue_set.count()}</td>
+</tr>
+% endfor
+</tbody>
+</table>

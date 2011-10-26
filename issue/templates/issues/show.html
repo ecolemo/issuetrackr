@@ -14,6 +14,12 @@ $(document).ready(function() {
 	<span class="writer_info">${issue.writer} ${issue.updated}</span>
 </h1>
 <div class="issue_content">${issue.content}</div>
+<h5 class="issue_tags">태그</h5>
+<ul class="issue_tags">
+% for tag in issue.tags.all():
+    <li><a href="/issues?tag=${tag.name}">${tag.name}</a></li>
+% endfor
+</ul>
 <div style="margin-top: 10px; text-align: center;">
 	<a href="/issues/">목록</a>
 	|

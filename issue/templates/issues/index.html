@@ -45,6 +45,9 @@ table th { text-align: left; }
 .issue_title { text-align: left; background-color: #FFEECC; border: 1px solid #562C1C; font-size: 36px; color: #000000; }
 </style>
 </%block>
+% if 'tag' in request.GET:
+    <div>Tag : ${request.GET['tag']}</div>
+% endif
 <table style="">
 <tbody>
 % for item in objects:

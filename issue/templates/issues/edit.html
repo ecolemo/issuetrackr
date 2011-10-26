@@ -23,7 +23,7 @@ $(document).ready(function() {
 	</tr>
 	<tr>
 		<th><label for="issue_tags">태그</label></th>
-		<td><input id="issue_tags" name="tags" type="text"></td>
+		<td><input id="issue_tags" name="tags" type="text" value="${', '.join([tag.name for tag in issue.tags.all()])}"></td>
 	</tr>
 	
 </tbody>

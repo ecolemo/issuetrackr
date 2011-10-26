@@ -18,7 +18,9 @@ img { vertical-align: middle }
 .comment_writer { background: #FFD25E; padding: 10px; font-size: 10pt }
 .comment_content { border-bottom: 1px solid #562C1C; margin-bottom: 10px; padding: 10px }
 
-
+h5.issue_tags { float:left;}
+ul.issue_tags { margin-left: 10px}
+.issue_tags li { display: inline; margin-right: 20px}
 
 table.edit {width: 100%}
 table.edit th {background: #D2F575}

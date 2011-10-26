@@ -39,7 +39,7 @@ resolved_count = Issue.objects.filter(status='resolved').count()
 			<div class="profile">
 				% if request.user.is_authenticated():
 					<img src="http://gravatar.com/avatar/${md5.new(request.user.email).hexdigest()}?s=50">
-					<a href="/accounts/${request.user.id}" style="margin-left: 5px">${request.user}</a>
+					<a href="/accounts/${request.user.id}" style="margin-left: 5px">${request.user.username}</a>
 				% else:
 					<a href="/accounts/login?next=/issues" style="margin-left: 5px">Login</a>
 				% endif
