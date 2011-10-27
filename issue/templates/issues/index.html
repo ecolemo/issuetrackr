@@ -28,7 +28,9 @@
         imgs = [str(e) for e in set([img['src'] for img in soup('img')])]
         template = """<img class="issue_image" src='%s' style='width:120px;'>"""
         #return ''.join([template%(e) for e in imgs])
-        return template % (imgs[0])
+        if len(imgs) > 0 :
+        	return template % (imgs[0])
+        else : return text
 
     def avatar(email):
         import md5
@@ -115,7 +117,7 @@ table th { text-align: left; }
                         </ul>
                     </div>
                 </td>
-                <td>${item.content|images}</td>
+				<td>${item.content|images}</td>
             </tr>
         </table>
     </td>
