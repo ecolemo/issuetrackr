@@ -10,8 +10,8 @@ $(document).ready(function() {
 </%block>
 <h1>
 	${issue.title}
-    <div style="float: right; margin-top: 7px;">
-    	<span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span>
+    <div style="float: right; margin-top: 0px;">
+    	${self.helper.avatar(issue.writer, 32)}<span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span>
     </div>
 </h1>
 <div style="float: right; margin-right: 10px;"><a href="/issues/${issue.id}/edit">수정</a></div>
@@ -27,7 +27,11 @@ $(document).ready(function() {
 </div>
 <h3>댓글</h3>
 % for comment in issue.comment_set.order_by('-updated'):
-<div class="comment_writer">${comment.writer.username} <span style="float:right">${comment.updated}</span></div>
+<div style="padding: 0px 10px 10px 10px; border-bottom: 1px dotted rgb(75,84,105)">
+    ${self.helper.avatar(comment.writer, 32)}
+    <span class="writer_info">${comment.writer.username}</span>
+    <span class="date" style="float:right">${comment.updated}</span>
+</div>
 <div class="comment_content">${comment.content}</div>
 % endfor
 <form action="/comments/_/create" method="post">
@@ -40,5 +44,15 @@ $(document).ready(function() {
 </form>
 
 <%block name="sidebar_content">
-agsklkl;askla
+<div class="sidebar_issue">
+    <h5 style="margin-top: 10px">태그 연관 이슈</h5>
+    <ul class="sidebar_issue">
+        % for tag in issue.tags.all():
+        <li class="sidebar_issue" style="margin-top: 6px;"><a style="font-size: 9pt;" href="/issues?tag=${tag.name}">${tag.name}</a></li>
+        % for aIssue in tag.issue_set.all():
+        <li style="margin-left: 10px"><a href="/issues/${aIssue.id}">${aIssue.title}</a></li>
+        % endfor
+        % endfor
+    </ul>
+</div>
 </%block>
