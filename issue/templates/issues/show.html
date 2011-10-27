@@ -40,5 +40,15 @@ $(document).ready(function() {
 </form>
 
 <%block name="sidebar_content">
-agsklkl;askla
+<div class="sidebar_issue">
+    <h5>태그 연관 이슈</h5>
+    <ul class="sidebar_issue">
+        % for tag in issue.tags.all():
+        <li class="sidebar_issue" style="margin-top: 6px;">${tag.name}</li>
+        % for aIssue in tag.issue_set.all():
+        <li style="margin-left: 10px"><a href="/issues/${aIssue.id}">${aIssue.title}</a></li>
+        % endfor
+        % endfor
+    </ul>
+</div>
 </%block>

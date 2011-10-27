@@ -30,6 +30,9 @@ ul { margin: 0; padding: 0}
 ul.issue_tags { margin-left: 10px}
 .issue_tags li { display: inline; margin-right: 20px}
 
+.sidebar_issue ul { padding: 0; }
+.sidebar_issue li { list-style: none;}
+
 table.edit {width: 100%; font-size: 10pt}
 table.edit th { width: 50px; background: #D2F575; }
 table.edit td {background: #FFFFD1; padding: 5px;}
