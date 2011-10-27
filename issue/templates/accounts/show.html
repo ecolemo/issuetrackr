@@ -1,0 +1,16 @@
+<%inherit file="/base.html"/>
+<%block name="head">
+</%block>
+<h1>사용자 정보 변경</h1>
+<form action="/accounts/${request.user.id}/update" method="post">
+<div>
+<input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
+<br>
+<label for="username">이름</label>
+<input type="text" id="username" name="username" value="${request.user.username}" />
+<br>
+<br>
+<input type="submit" value="변경">
+</div>
+</form>
+
