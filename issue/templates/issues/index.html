@@ -26,12 +26,13 @@
         from BeautifulSoup import BeautifulSoup
         soup = BeautifulSoup(text)
         imgs = [str(e) for e in set([img['src'] for img in soup('img')])]
-
-        return ''.join(["""<img src='%s' style='height:120px;'>"""%(e) for e in imgs])
+        template = """<img class="issue_image" src='%s' style='width:120px;'>"""
+        #return ''.join([template%(e) for e in imgs])
+        return template % (imgs[0])
 
     def avatar(email):
         import md5
-        return """<img src="http://gravatar.com/avatar/%s?s=50">""" % (md5.new(email).hexdigest())
+        return """<img class="writer_avatar" src="http://gravatar.com/avatar/%s?s=50">""" % (md5.new(email).hexdigest())
 %>
 
 <%inherit file="/base.html"/>
@@ -39,39 +40,86 @@
 ${parent.head()}
 <style type="text/css">
 table {border-collapse: collapse; width: 100%}
-table td { border-bottom: 1px solid #562C1C; }
+table td { }
 table th { text-align: left; }
-.thumbnail_cell { width: 150px; padding: 10px }
-.issue_title { text-align: left; background-color: #FFEECC; border: 1px solid #562C1C; font-size: 36px; color: #000000; }
+.issue_title a {
+    font-family: "NanumGothic", "나눔고딕";
+    font-size: 30px;
+    font-weight:bold;
+    background-color: transparent;
+    color: #000000;
+    border: 1px solid #cccccc;
+}
+
+.issue_image {
+
+    border: 1px solid #cccccc;
+}
+
+.issue_content {
+    font-family: "NanumGothic", "나눔고딕";
+    line-height: 1.5em;
+    font-size: 14px;
+    font-weight:bold;
+    background-color: transparent;
+    color: #000000;
+    border: 1px solid #cccccc;
+}
+
+.issue_info {
+    font-family: "NanumGothic", "나눔고딕";
+    font-size: 14px;
+    font-weight:bold;
+    background-color: transparent;
+    color: #000000;
+    text-align: right;
+    border: 1px solid #cccccc;
+}
+
+.issue_info ul {
+    list-style: none;
+    padding: 8px;
+    margin: 4px;
+    border: 1px solid #cccccc;
+}
+
+.writer_avatar {
+    float: right;
+    margin: 4px;
+    border: 1px solid #cccccc;
+}
 </style>
 </%block>
 % if 'tag' in request.GET:
     <div>Tag : ${request.GET['tag']}</div>
 % endif
-<table style="">
+<table>
 <tbody>
 % for item in objects:
 <tr>
-	<td class="thumbnail_cell">${item.content|images}</td>
-    <td class="">
-        <table style="border:1px solid #CCEEFF; height:100%; vertical-align:top;">
+    <td>
+        <table>
             <tr>
-                <td><span class="issue_title"><a href="/issues/${item.id}">${item.title}</a></span></td>
+                <td colspan=2><span class="issue_title"><a href="/issues/${item.id}">${item.title}</a></span></td>
             </tr>
             <tr>
                 <td>
-                    ${item.content|puretext,summary}
-                    <div class="profile">
+                    <div class="issue_content">${item.content|puretext,summary}</div>
+                    <div class="issue_info">
                         % if request.user.is_authenticated():
                             ${item.writer.email|avatar}
-                            ${item.writer}
-                            ${item.updated}
                         % endif
+                        <ul>
+                        <li>${item.writer}
+                        <li>${item.updated}
+                        </ul>
                     </div>
                 </td>
+                <td>${item.content|images}</td>
             </tr>
         </table>
     </td>
+
 </tr>
 % endfor
 </tbody>
