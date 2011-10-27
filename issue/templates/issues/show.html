@@ -48,7 +48,7 @@ $(document).ready(function() {
     <h5 style="margin-top: 10px">태그 연관 이슈</h5>
     <ul class="sidebar_issue">
         % for tag in issue.tags.all():
-        <li class="sidebar_issue" style="margin-top: 6px;"><a style="font-size: 9pt;" href="/tags?tag=${tag.name}">${tag.name}</a></li>
+        <li class="sidebar_issue" style="margin-top: 6px;"><a style="font-size: 9pt;" href="/issues?tag=${tag.name}">${tag.name}</a></li>
         % for aIssue in tag.issue_set.all():
         <li style="margin-left: 10px"><a href="/issues/${aIssue.id}">${aIssue.title}</a></li>
         % endfor

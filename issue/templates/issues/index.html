@@ -54,16 +54,6 @@ table th { text-align: left; }
     border: 1px solid #cccccc;
 }
 
-.issue_content {
-    font-family: "NanumGothic", "나눔고딕";
-    line-height: 1.5em;
-    font-size: 14px;
-    font-weight:bold;
-    background-color: transparent;
-    color: #000000;
-    border: 1px solid #cccccc;
-}
-
 .issue_info {
     font-family: "NanumGothic", "나눔고딕";
     font-size: 14px;
@@ -81,44 +71,25 @@ table th { text-align: left; }
     border: 1px solid #cccccc;
 }
 
-.writer_avatar {
-    float: right;
-    margin: 4px;
-    border: 1px solid #cccccc;
-}
 </style>
 </%block>
 % if 'tag' in request.GET:
-    <div>Tag : ${request.GET['tag']}</div>
+    <div>태그 : ${request.GET['tag']}</div>
 % endif
-<table>
-<tbody>
-% for item in objects:
-<tr>
-    <td>
-        <table>
-            <tr>
-                <td colspan=2><span class="issue_title"><a href="/issues/${item.id}">${item.title}</a></span></td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="issue_content">${item.content|puretext,summary}</div>
-                    <div class="issue_info">
-                        % if request.user.is_authenticated():
-                            ${self.helper.avatar(item.writer)}
-                        % endif
-                        <ul>
-                        <li>${item.writer}
-                        <li>${item.updated}
-                        </ul>
-                    </div>
-                </td>
-				<td>${item.content|images}</td>
-            </tr>
-        </table>
-    </td>
 
-</tr>
+% for issue in objects:
+    <h1 style="border-bottom: none;">
+    	<a href="/issues/${issue.id}">${issue.title}</a>
+    </h1>
+    <div style="float:left; margin:0 10px">${issue.content|images}</div>
+    <div class="issue_content" style="padding-bottom: 20px">${issue.content|puretext,summary}</div>
+    <div style="float:right; margin-top: 7px; margin-right: 20px; ">
+        <span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span>
+    </div>
+    <div style="padding: 5px 10px; border-bottom: 1px dotted rgb(75,84,105);">
+    태그:
+    % for tag in issue.tags.all():
+        <a href="/issues?tag=${tag.name}">${tag.name}</a>
+    % endfor
+    </div>
 % endfor
-</tbody>
-</table>
