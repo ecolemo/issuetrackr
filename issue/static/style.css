@@ -1,28 +1,36 @@
-body { margin: 0}
+body { margin: 0; font-size: 10pt}
 a {	text-decoration: none }
+h1,h2,h3,h4,h5,h6 { color: rgb(0,65,111); margin: 5px 0 }
+h1 { font-size: 16pt; padding: 5px 10px; border-bottom: 3px solid rgb(75,84,105); }
+h2 { font-size: 14pt; padding: 3px 10px }
+h3 { font-size: 12pt; padding: 0 10px; }
+h4 { font-size: 10pt; padding: 0 10px; }
+h2,h3 { border-bottom: 2px solid rgb(75,84,105);}
+h4,h5 { border-bottom: 1px solid rgb(75,84,105);}
+img { vertical-align: middle }
+fieldset { border: none; text-align: center;}
+ul { margin: 0; padding: 0}
+
 .header .logo a { color: rgb(0,65,111); font-size: 16pt;  }
 .navigation { padding: 5px; background:rgb(75,84,105); color: white; font-size: 10.5pt}
 .navigation a { color: white; margin: 0 10px;}
 .navigation a:hover { color: rgb(208,200,223); }
-h1 { color: rgb(0,65,111); font-size: 16pt; padding: 5px 5px }
-h3 { font-size: 12pt; padding: 0 10px; }
-h1 .writer_info { font-size: 10pt; float:right; }
 
-img { vertical-align: middle }
+.writer_info { font-size: 9pt; margin: 0 10px;}
+.date { font-size: 8pt; color: rgb(68,120,180) }
 .sidebar { float: right; width: 180px; padding: 10px; background: rgb(232,232,255) }
 .profile { margin: 5px; }
 .main { width: 800px; }
 
 .status_new { color: white; margin: 5px; vertical-align:middle; font-size: 11pt; padding: 3px 5px; background-color: #FF881F; border: 1px solid #8F2800}
-.issue_content { padding: 10px; border-top: 1px solid #562C1C; border-bottom: 1px solid #562C1C;}
+.issue_content { padding: 10px; }
 .comment_writer { background: #FFD25E; padding: 10px; font-size: 10pt }
 .comment_content { border-bottom: 1px solid #562C1C; margin-bottom: 10px; padding: 10px }
 
-h5.issue_tags { float:left;}
 ul.issue_tags { margin-left: 10px}
 .issue_tags li { display: inline; margin-right: 20px}
 
-table.edit {width: 100%}
-table.edit th {background: #D2F575}
+table.edit {width: 100%; font-size: 10pt}
+table.edit th { width: 50px; background: #D2F575; }
 table.edit td {background: #FFFFD1; padding: 5px;}
 table.edit td input { width: 80%}

@@ -10,7 +10,7 @@ class Issue(models.Model):
     writer = models.ForeignKey(User)
     title = models.CharField(max_length=200)
     content = models.TextField()
-    status = models.CharField(max_length=50, default='new')
+    status = models.CharField(max_length=50, default='open')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag)

@@ -9,21 +9,21 @@ $(document).ready(function() {
 </script>
 </%block>
 <h1>
-	<span class="status_${issue.status}">${issue.status}</span>
 	${issue.title}
-	<span class="writer_info">${issue.writer} ${issue.updated}</span>
+    <div style="float: right; margin-top: 7px;">
+    	<span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span>
+    </div>
 </h1>
+<div style="float: right; margin-right: 10px;"><a href="/issues/${issue.id}/edit">수정</a></div>
 <div class="issue_content">${issue.content}</div>
-<h5 class="issue_tags">태그</h5>
+<h4 class="issue_tags">태그</h4>
 <ul class="issue_tags">
 % for tag in issue.tags.all():
     <li><a href="/issues?tag=${tag.name}">${tag.name}</a></li>
 % endfor
 </ul>
 <div style="margin-top: 10px; text-align: center;">
-	<a href="/issues/">목록</a>
-	|
-	<a href="/issues/${issue.id}/edit">수정</a>
+	<a href="/issues/">목록보기</a>
 </div>
 <h3>댓글</h3>
 % for comment in issue.comment_set.order_by('-updated'):
