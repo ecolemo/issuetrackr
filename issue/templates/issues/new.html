@@ -13,7 +13,7 @@ $(document).ready(function() {
 <table class="edit">
 <tbody>
 	<tr>
-		<th style="width: 60px"><label for="issue_title">제목</label></th>
+		<th><label for="issue_title">제목</label></th>
 		<td><input id="issue_title" type="text" name="title"></td>
 	</tr>
 	<tr>
@@ -22,7 +22,10 @@ $(document).ready(function() {
 	</tr>
 	<tr>
 		<th><label for="issue_tags">태그</label></th>
-		<td><input id="issue_tags" name="tags" type="text"></td>
+		<td>
+			<label for="issue_tags">태그는 쉼표(,)로 구분해서 넣어주세요.</label>
+			<input id="issue_tags" name="tags" type="text">
+		</td>
 	</tr>
 	
 </tbody>
