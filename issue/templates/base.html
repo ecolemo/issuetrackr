@@ -19,7 +19,6 @@ resolved_count = Issue.objects.filter(status='resolved').count()
 	<div style="margin: 0 auto; width: 1000px">
 		<div class="header" style="overfloat: hidden">
 			<div class="profile" style="float: right; ">
-				<a href="/accounts/login?next=issues">login</a>
 			</div>
 			<div class="logo" style="">
 				<a href="/" style="height: 40px; line-height: 40px; padding: 10px 0"><img
@@ -48,7 +47,7 @@ resolved_count = Issue.objects.filter(status='resolved').count()
 
             <%block name="sidebar_content">
 			<div class="buttons" style="text-align: center; margin-top: 20px;">
-				<a href="/issues/_/new" style="padding: 10px 36px; background: url(/static/images/button_bg.png) center center no-repeat"><img src="/static/images/edit_icon.png" style="width: 16px; vertical-align: middle">이슈 올리기</a>
+				<a href="/issues/_/new" style="padding: 10px 43px; background: url(/static/images/button_bg.png) center center no-repeat"><img src="/static/images/edit_icon.png" style="width: 16px; vertical-align: middle">이슈 올리기</a>
 			</div>
 			<div class="status" style="margin-top: 20px; text-align: center;">
 				전체 이슈 : ${issue_count}
