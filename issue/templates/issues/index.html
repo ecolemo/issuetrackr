@@ -30,7 +30,7 @@
         #return ''.join([template%(e) for e in imgs])
         if len(imgs) > 0 :
         	return template % (imgs[0])
-        else : return text
+        else : return ""
 
     def avatar(email):
         import md5
