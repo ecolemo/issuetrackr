@@ -14,7 +14,14 @@ class Issue(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag)
-   
+
+    def update_tags(self, tag_str):
+        self.tags.all().delete()
+        tags = tag_str.split(',')
+        for tag in tags:
+            if tag.strip() == '': continue
+            self.tags.add(Tag.objects.get_or_create(name=tag.strip())[0])
+
 class Comment(models.Model):
     writer = models.ForeignKey(User)
     issue = models.ForeignKey(Issue)

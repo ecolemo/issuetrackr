@@ -18,9 +18,7 @@ def new(request, resource_id):
 @login_required
 def create(request, resource_id):
     issue = request.user.issue_set.create(title=request.POST['title'], content=request.POST['content'])
-    tags = request.POST['tags'].split(',')
-    for tag in tags:
-        issue.tags.add(Tag.objects.get_or_create(name=tag.strip())[0])
+    issue.update_tags(request.POST['tags'])
 
     return redirect('/issues/%d' % issue.id)
 
@@ -40,10 +38,7 @@ def update(request, resource_id):
     issue.content=request.POST['content']
     issue.save()
 
-    issue.tags.all().delete()
-    tags = request.POST['tags'].split(',')
-    for tag in tags:
-        issue.tags.add(Tag.objects.get_or_create(name=tag.strip())[0])
+    issue.update_tags(request.POST['tags'])
 
     return redirect('/issues/%d' % issue.id)
 
