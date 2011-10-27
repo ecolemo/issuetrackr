@@ -2,7 +2,7 @@
  * @example An iframe-based dialog with custom button handling logics.
  */
 ( function() {
-    CKEDITOR.plugins.add('MediaEmbed',
+    CKEDITOR.plugins.add('mediaembed',
         {
             requires:[ 'iframedialog' ],
             init:function(editor) {
