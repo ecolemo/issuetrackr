@@ -15,4 +15,4 @@ def login(request, object_id):
 def logout(request, object_id):
     """Logs out user"""
     auth_logout(request)
-    return HttpResponseRedirect('/home')
+    return HttpResponseRedirect('/issues')
