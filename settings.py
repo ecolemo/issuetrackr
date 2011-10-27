@@ -164,10 +164,12 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-TWITTER_CONSUMER_KEY         = ''
-TWITTER_CONSUMER_SECRET      = ''
-FACEBOOK_APP_ID              = ''
-FACEBOOK_API_SECRET          = ''
+SOCIAL_AUTH_ENABLED_BACKENDS = ('google', 'facebook', 'twitter')
+
+TWITTER_CONSUMER_KEY         = 'tUsczonNaSIiDDeCiuGQ'
+TWITTER_CONSUMER_SECRET      = 'BbadS2G6GFD1mJ7nT6VDLbIlTP2xdoFxPWC3UYgzJ4'
+FACEBOOK_APP_ID              = '237390709648651'
+FACEBOOK_API_SECRET          = '822575910388ab37544bdd44b664a065'
 LINKEDIN_CONSUMER_KEY        = ''
 LINKEDIN_CONSUMER_SECRET     = ''
 ORKUT_CONSUMER_KEY           = ''
