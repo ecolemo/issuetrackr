@@ -13,6 +13,7 @@ from issue.models import Issue
 issue_count = Issue.objects.count()
 resolved_count = Issue.objects.filter(status='resolved').count()
 %>
+<%namespace name="helper" file="/commons.html" inheritable="True"/>
 </head>
 <body>
 	<div style="margin: 0 auto; width: 1000px">

@@ -1,7 +1,7 @@
 body { margin: 0; font-size: 10pt}
 a {	text-decoration: none }
 h1,h2,h3,h4,h5,h6 { color: rgb(0,65,111); margin: 5px 0 }
-h1 { font-size: 16pt; padding: 5px 10px; border-bottom: 3px solid rgb(75,84,105); }
+h1 { font-size: 16pt; padding: 10px 10px; border-bottom: 3px solid rgb(75,84,105); }
 h2 { font-size: 14pt; padding: 3px 10px }
 h3 { font-size: 12pt; padding: 0 10px; }
 h4 { font-size: 10pt; padding: 0 10px; }
@@ -16,7 +16,7 @@ ul { margin: 0; padding: 0}
 .navigation a { color: white; margin: 0 10px;}
 .navigation a:hover { color: rgb(208,200,223); }
 
-.writer_info { font-size: 9pt; margin: 0 10px;}
+.writer_info { color: rgb(0,65,111); font-size: 10pt; font-weight:bold; margin: 0 10px;}
 .date { font-size: 8pt; color: rgb(68,120,180) }
 .sidebar { float: right; width: 180px; padding: 10px; background: rgb(232,232,255) }
 .profile { margin: 5px; }
