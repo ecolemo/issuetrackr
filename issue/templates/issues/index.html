@@ -31,10 +31,6 @@
         if len(imgs) > 0 :
         	return template % (imgs[0])
         else : return ""
-
-    def avatar(email):
-        import md5
-        return """<img class="writer_avatar" src="http://gravatar.com/avatar/%s?s=50">""" % (md5.new(email).hexdigest())
 %>
 
 <%inherit file="/base.html"/>
@@ -109,7 +105,7 @@ table th { text-align: left; }
                     <div class="issue_content">${item.content|puretext,summary}</div>
                     <div class="issue_info">
                         % if request.user.is_authenticated():
-                            ${item.writer.email|avatar}
+                            ${self.helper.avatar(item.writer)}
                         % endif
                         <ul>
                         <li>${item.writer}

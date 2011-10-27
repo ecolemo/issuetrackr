@@ -1,0 +1,4 @@
+<%!
+import md5
+%>
+<%def name="avatar(user, size=50)"><img class="writer_avatar" src="http://gravatar.com/avatar/${md5.new(user.email).hexdigest()}?s=${size}"></%def>
