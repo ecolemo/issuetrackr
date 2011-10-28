@@ -19,13 +19,13 @@ $(function() {
 <h1>
 	${issue.title}
 </h1>
-<div style="text-align:right; margin-top: 0px; margin-right: 5px;">
-    ${self.helper.avatar(issue.writer, 32)}<span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span><br/>
-</div>
 <div style="text-align: right; margin-top: 10px">
 <span style="vertical-align:middle; padding:4px; margin-top:10px; margin-right: 5px; border: 1px solid;"><a href="/issues/${issue.id}/edit">수정</a></span>
 </div>
 <div class="issue_content">${issue.content}</div>
+<div style="text-align:right; margin: 10px;">
+    ${self.helper.avatar(issue.writer, 32)}<span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span><br/>
+</div>
 <h4 class="issue_tags">태그</h4>
 <ul class="issue_tags">
 % for tag in issue.tags.all():
