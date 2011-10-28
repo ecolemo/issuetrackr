@@ -4,71 +4,49 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>로그인 - 대한민국 이슈 트래커</title>
 <style type="text/css">
-body, input, select, textarea {color:black; font-family:'Malgun Gothic','맑은 고딕',dotum,'돋움',sans-serif; font-weight: normal;}
+body, input, select, textarea {color:black; font-family:'돋움',dotum,Helvetica,sans-serif; font-weight: normal;}
 .subheader {border-bottom: 1px solid #666; clear: both; height: 34px; margin-bottom: 15px;}
-.subheader h1 {font-size: 170%; line-height: 34px; margin-bottom: 0px; }
+.subheader h1 {font-size: 160%; line-height: 34px; margin-bottom: 0px; }
+
+.login-page #openid_choice {margin-top: 10px;}
+.login-page #openid_btns, .login-page #openid_btns br {margin-left: 30px; clear:both;}
+.login-page #openid_btns {overflow: auto;}
+.login-page .openid_large_btn {float:left; width:100px; height:49px; margin:3px; 
+				   border: 2px solid #ddd; border-right: 2xp solid #ccc; border-bottom: 2px solid #ccc; border-radius: 5px; -webkit-border-radius: 5px;
+				   box-shadow:2px 2px 4px #ddd; -webkit-box-shadow: 2px 2px 4px #ddd;}
+.login-page #openid-url-input-area {margin-top: 30px;}
 </style>
 
 </head>
-<body>
+<body class="login-page">
 <div>
   <div class="subheader">
   	<h1>로그인</h1>
   </div>
-  <h3>Login using <a href="http://oauth.net/" title="OAuth">OAuth</a> from:</h3>
-  <ul>
-  % for name in social_auth['backends']['oauth']:
-    <li><a rel="nofollow" href="${ reverse_url('socialauth_begin', args=(name,))}?next=${request.REQUEST['next']}">${ name }</a></li>
-  % endfor
-  </ul>
-</div>
-<% print social_auth['backends'] 
+  <div id="openid_choice">
+  	<p>페이스북, 트위터, 구글 아이디로 로그인 할 수 있습니다. 아래 로고 중 하나를 클릭하세요.</p>
+<% 
+	##print social_auth['backends'] 
 %>
-<div>
-  <h3>Login using <a href="http://tools.ietf.org/html/draft-ietf-oauth-v2-10" title="OAuth2">OAuth2</a> from:</h3>
-  <ul>
-  % for name in social_auth['backends']['oauth2']:
-    <li><a rel="nofollow" href="${ reverse_url('socialauth_begin', args=(name,))}?next=${request.REQUEST['next']}">${name}</a></li>
-  % endfor
-  </ul>
-</div>
-
-<div>
-  <h3>Login using <a href="http://openid.net/" title="OpenId">OpenId</a> from:</h3>
-  <ul>
-  % for name in social_auth['backends']['openid']:
-    <li>
-    % if name != "livejournal" and name != "openid":
-      <a rel="nofollow" href="${ reverse_url('socialauth_begin', args=(name,))}?next=${request.REQUEST['next']}">${ name }</a>
-    % else:
-      % if name == "livejournal":
-      <form action="${ reverse_url('socialauth_begin', args=('livejournal',))}?next=${request.REQUEST['next']}" method="post">
-          <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
+    <div id="openid_btns">
+      <a title="페이스북으로 로그인" rel="nofollow" href="${reverse_url('socialauth_begin', args=('facebook',))}?next=${request.REQUEST['next']}" style="background: #fff url(/static/images/openid-logos.png); background-position: -1px -1px" class="stack_exchange openid_large_btn"></a>
+      <a title="트위터로 로그인" rel="nofollow" href="${ reverse_url('socialauth_begin', args=('twitter',))}?next=${request.REQUEST['next']}" style="background: #fff url(/static/images/openid-logos.png); background-position: -1px -51px" class="stack_exchange openid_large_btn"></a>
+      <a title="구글로 로그인" rel="nofollow" href="${ reverse_url('socialauth_begin', args=('google',))}?next=${request.REQUEST['next']}" style="background: #fff url(/static/images/openid-logos.png); background-position: -1px -101px" class="stack_exchange openid_large_btn"></a>
+      <br/>
+      <div id="openid-url-input-area">
+        <p>오픈아이디로도 로그인 할 수 있습니다.</p>
+	  </div>
+      <form action="${ reverse_url('socialauth_begin', args=('openid',))}?next=${request.REQUEST['next']}" method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
         <input type="hidden" value="${request.REQUEST['next']}" name="next" />
         <div>
-          <label for="openid_lj_user">LiveJournal user:</label>
-          <input id="openid_lj_user" type="text" value="" name="openid_lj_user" />
-          <input type="submit" value="Login"/>
+          <label for="openid_identifier">오픈아이디</label>
+          <input id="openid_identifier" type="text" value="" name="openid_identifier" />
+          <input type="submit" value="Login" />
         </div>
       </form>
-      % else:
-        % if name == "openid":
-        <form action="${ reverse_url('socialauth_begin', args=('openid',))}?next=${request.REQUEST['next']}" method="post">
-          <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
-          <input type="hidden" value="${request.REQUEST['next']}" name="next" />
-          <div>
-            <label for="openid_identifier">Other provider</label>
-            <input id="openid_identifier" type="text" value="" name="openid_identifier" />
-            <input type="submit" value="Login" />
-          </div>
-          <p class="helptext">Like your personal <a href="https://www.myopenid.com/" title="My OpenId">myopenid</a></p>
-        </form>
-        % endif
-      % endif
-    % endif
-    </li>
-  % endfor
-  </ul>
-</div>      
+	</div>
+  </div>
+</div>
 </body>
 </html>
