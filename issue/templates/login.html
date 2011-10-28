@@ -2,10 +2,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>로그인 - 대한민국 이슈 트래커</title>
+<style type="text/css">
+body, input, select, textarea {color:black; font-family:'Malgun Gothic','맑은 고딕',dotum,'돋움',sans-serif; font-weight: normal;}
+.subheader {border-bottom: 1px solid #666; clear: both; height: 34px; margin-bottom: 15px;}
+.subheader h1 {font-size: 170%; line-height: 34px; margin-bottom: 0px; }
+</style>
+
 </head>
 <body>
 <div>
+  <div class="subheader">
+  	<h1>로그인</h1>
+  </div>
   <h3>Login using <a href="http://oauth.net/" title="OAuth">OAuth</a> from:</h3>
   <ul>
   % for name in social_auth['backends']['oauth']:
@@ -13,7 +22,8 @@
   % endfor
   </ul>
 </div>
-
+<% print social_auth['backends'] 
+%>
 <div>
   <h3>Login using <a href="http://tools.ietf.org/html/draft-ietf-oauth-v2-10" title="OAuth2">OAuth2</a> from:</h3>
   <ul>
