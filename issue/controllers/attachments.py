@@ -1,4 +1,4 @@
-from issue.models import Attachment, Issue
+from issue.models import Attachment
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.http import http_date
@@ -8,7 +8,7 @@ import mimetypes
 @csrf_exempt
 def create(request, resource_id):
     f = request.FILES['upload']
-    attachment = Attachment.objects.create(issue=Issue.objects.all()[0], writer=request.user, filename=f.name, size=f.size)
+    attachment = Attachment.objects.create(writer=request.user, filename=f.name, size=f.size)
     attachment.save_file(f)
     
     return HttpResponse(attachment.url)

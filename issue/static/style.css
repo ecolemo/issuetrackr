@@ -24,7 +24,6 @@ li { list-style: none}
 .main { width: 800px; }
 
 .status_new { color: white; margin: 5px; vertical-align:middle; font-size: 11pt; padding: 3px 5px; background-color: #FF881F; border: 1px solid #8F2800}
-.issue_content { padding: 10px; font-family: "NanumGothic", "나눔고딕"; line-height: 1.5em; }
 
 .comment_writer { background: #FFD25E; padding: 10px; font-size: 10pt }
 .comment_content { border-bottom: 1px solid #562C1C; margin-bottom: 10px; padding: 10px }
@@ -42,3 +41,6 @@ table.edit td input { width: 80%}
 
 
 .writer_avatar {  }
+
+.issue_content { padding: 10px; font-family: "NanumGothic", "나눔고딕"; line-height: 1.5em; }
+.issue_content h1 { border: none }

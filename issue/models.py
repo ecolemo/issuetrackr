@@ -40,7 +40,7 @@ class Attachment(models.Model):
     storage_path = os.environ['HOME'] + '/issuetrackr_files'
     
     writer = models.ForeignKey(User)
-    issue = models.ForeignKey(Issue)
+    issue = models.ForeignKey(Issue, null=True)
     filename = models.CharField(max_length=200)
     size = models.IntegerField()
     created = models.DateTimeField(auto_now_add=True)
