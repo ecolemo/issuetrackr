@@ -1,20 +1,7 @@
 <%!
-    def strip_tags(html, invalid_tags):
-        from BeautifulSoup import BeautifulSoup, NavigableString
-        soup = BeautifulSoup(html)
-        for tag in soup.findAll(True):
-            if tag.name in invalid_tags:
-                s = ""
-                for c in tag.contents:
-                    if not isinstance(c, NavigableString):
-                        c = strip_tags(unicode(c), invalid_tags)
-                    s += unicode(c)
-                tag.replaceWith(s)
-        return soup.text
-
-    def puretext(text):
-        invalidTags = ['b', 'i', 'u']
-        return strip_tags(text,invalidTags)
+    import re
+    def strip_tags(text):
+        return re.sub('<[^>]+>', '', text)
 
     def summary(text):
         limit = 200
@@ -84,7 +71,7 @@ table th { text-align: left; }
     	<a href="/issues/${issue.id}">${issue.title}</a>
     </h1>
     <div style="float:left; margin:0 10px">${issue.content|images}</div>
-    <div class="issue_content" style="padding-bottom: 20px">${issue.content|puretext,summary}</div>
+    <div class="issue_content" style="padding-bottom: 20px">${issue.content|strip_tags,summary}</div>
     <div style="float:right; margin-top: 7px; margin-right: 20px; ">
         <span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span>
     </div>
