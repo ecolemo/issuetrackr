@@ -1,17 +1,18 @@
 body { margin: 0; font-size: 10pt}
 a {	text-decoration: none }
-h1,h2,h3,h4,h5,h6 { color: rgb(0,65,111); margin: 5px 0 }
-h1 { font-size: 16pt; padding: 10px 10px; border-bottom: 3px solid rgb(75,84,105); }
-h2 { font-size: 14pt; padding: 3px 10px }
-h3 { font-size: 12pt; padding: 0 10px; }
-h4 { font-size: 10pt; padding: 0 10px; }
-h2,h3 { border-bottom: 2px solid rgb(75,84,105);}
-h4,h5 { border-bottom: 1px solid rgb(75,84,105);}
+h1.title,h2.title,h3.title,h4.title,h5.title,h6.title { color: rgb(0,65,111); margin: 5px 0 }
+h1.title { font-size: 16pt; padding: 10px 10px; border-bottom: 3px solid rgb(75,84,105); }
+h2.title { font-size: 14pt; padding: 3px 10px }
+h3.title { font-size: 12pt; padding: 0 10px; }
+h4.title { font-size: 10pt; padding: 0 10px; }
+h2.title,h3.title { border-bottom: 2px solid rgb(75,84,105);}
+h4.title,h5.title { border-bottom: 1px solid rgb(75,84,105);}
 img { vertical-align: middle }
 fieldset { border: none; text-align: center;}
-ul { margin: 0; padding: 0}
-li { list-style: none}
+ul.issue_tags { margin: 0; padding: 0}
+ul.issue_tags li { list-style: none}
 
+.issue_tags a { margin-right: 10px; }
 .header .logo a { color: rgb(0,65,111); font-size: 16pt;  }
 .navigation { padding: 5px; background:rgb(75,84,105); color: white; font-size: 10.5pt}
 .navigation a { color: white; margin: 0 10px;}

@@ -8,7 +8,7 @@ $(function() {
 })
 </script>
 </%block>
-<h1>이슈 수정하기</h1>
+<h1 class="title">이슈 수정하기</h1>
 <form action="/issues/${issue.id}/update" method="post">
 <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
 <table class="edit">

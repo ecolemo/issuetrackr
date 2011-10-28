@@ -80,7 +80,7 @@ table th { text-align: left; }
 % endif
 
 % for issue in objects:
-    <h1 style="border-bottom: none;">
+    <h1 class="title" style="border-bottom: none;">
     	<a href="/issues/${issue.id}">${issue.title}</a>
     </h1>
     <div style="float:left; margin:0 10px">${issue.content|images}</div>
@@ -88,7 +88,7 @@ table th { text-align: left; }
     <div style="float:right; margin-top: 7px; margin-right: 20px; ">
         <span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span>
     </div>
-    <div style="padding: 5px 10px; border-bottom: 1px dotted rgb(75,84,105);">
+    <div class="issue_tags" style="padding: 5px 10px; border-bottom: 1px dotted rgb(75,84,105);">
     태그:
     % for tag in issue.tags.all():
         <a href="/issues?tag=${tag.name}">${tag.name}</a>

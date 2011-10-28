@@ -16,7 +16,7 @@ $(function() {
   js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=237390709648651";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-<h1>
+<h1 class="title">
 	${issue.title}
 </h1>
 <div style="text-align: right; margin-top: 10px">
@@ -26,7 +26,7 @@ $(function() {
 <div style="text-align:right; margin: 10px;">
     ${self.helper.avatar(issue.writer, 32)}<span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span><br/>
 </div>
-<h4 class="issue_tags">태그</h4>
+<h4 class="title issue_tags">태그</h4>
 <ul class="issue_tags">
 % for tag in issue.tags.all():
     <li><a href="/issues?tag=${tag.name}">${tag.name}</a></li>
@@ -42,7 +42,7 @@ $(function() {
 <div style="margin-top: 10px; text-align: center; clear: both;">
 	<a href="/issues/">목록보기</a>
 </div>
-<h3>댓글</h3>
+<h3 class="title">댓글</h3>
 % for comment in issue.comment_set.order_by('-updated'):
 <div style="padding: 0px 10px 10px 10px; border-bottom: 1px dotted rgb(75,84,105)">
     ${self.helper.avatar(comment.writer, 32)}
