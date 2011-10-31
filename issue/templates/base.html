@@ -14,6 +14,22 @@ issue_count = Issue.objects.count()
 resolved_count = Issue.objects.filter(status='resolved').count()
 %>
 <%namespace name="helper" file="/commons.html" inheritable="True"/>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26676945-1']);
+  _gaq.push(['_setDomainName', 'issuetrac.kr']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
 </head>
 <body>
 	<div style="margin: 0 auto; width: 1000px">
