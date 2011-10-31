@@ -1,0 +1,136 @@
+<html>
+<head>
+    <script type="text/javascript" src="/static/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/underscore-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/storify.css"/>
+</head>
+
+<body style="margin: 10px;">
+
+<form id="form" style="">
+    <input type="text" id="keyword" name="keyword" size="40"><input type="button" value="add cell" id="add_cell">
+</form>
+
+
+<div id="history-list" style="border: 1px solid; float:left; width:45%;">
+    <span>History</span>
+    <div id="history-items"></div>
+</div>
+<div id="cell-list" style="width: 45%; border: 1px solid; float:left;">
+    <span>Cell</span>
+    <div id="cell-items"></div>
+</div>
+
+<script language="JavaScript">
+    cellList = [];
+    historyList = [];
+    recentIdx = 0;
+    recentIdxForHistory = 0;
+
+    function addToHistory(id) {
+        for (var idx in cellList) {
+            var msg = cellList[idx];
+            if (msg.id == id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/historic/_/addToHistory',
+                    data: msg,
+                    success: function(msgs) {
+                        for (var idx in msgs) {
+                            var msgToAdd = msgs[idx];
+                            historyList.push(msgToAdd);
+                            var templateHistory = _.template($('#history-item-template').html());
+                            msgToAdd.id = recentIdxForHistory; recentIdxForHistory++;
+                            $("#history-items").append(templateHistory(msgToAdd));
+                            $('.delete-history').click(function() {
+                                alert("delete!" + this.id);
+                            });
+                        }
+                    },
+                    failure: function(msgs) {
+                        alert("failure : " + msgs);
+                    }
+                });
+
+                return;
+            }
+        }
+    }
+
+    $('#add_cell').click(function() {
+        var keyword = $('#keyword').val();
+        $.ajax({
+            url: '/historic/_/scrap',
+            data: ({keyword: keyword} ),
+            success: function(msgs) {
+
+                for (var idx in msgs) {
+                    var msg = msgs[idx];
+                    cellList.push(msg);
+                    msg.id = recentIdx; recentIdx++;    
+
+                    var templateCell = _.template($('#item-template').html());
+                    $("#cell-items").append(templateCell(msg));
+                }
+                $('.to-historic').click(function() {
+                    addToHistory(this.id);
+                });
+            },
+            failure: function(msg) {
+                alert(msg);
+            }
+        });
+
+    });
+
+</script>
+
+<%text>
+<script type="text/template" id="item-template">
+    <li class="r-element r-element-link">
+        <div class="s-default s-result s-element-content">
+            <div class="s-default-content">
+                <a href="<%= url %>" target="_blank">
+                    <div class="s-default-title"><%=id %> <%= title %></div>
+                </a>
+
+                <div class="s-default-description"><%= summary %></div>
+            </div>
+            <div class="s-attribution">
+                <div class="s-source"><a href="<%= url %>" target="_blank"><img src="http://g.etfv.co/<%= url %>" style="max-width: 16px" border="0"></a></div>
+                <div class="s-author"><a href="<%= url %>" target="_blank" class="s-author-name"><%= site_url %></a></div>
+                <a href="<%= url %>" target="_blank" class="s-posted">
+                <div data-timestamp="Sat Oct 29 2011 15:31:24 GMT+0900 (KST)" class="result-timestamp">seconds ago</div>
+            </a>
+                <div><span class="to-historic" id="<%= id %>" style='border: 1px solid;'>> to historic</span></div>
+            </div>
+            <div class="s-clear"></div>
+        </div>
+    </li>
+</script>
+<script type="text/template" id="history-item-template">
+    <li class="r-element r-element-link">
+        <div class="s-default s-result s-element-content">
+            <div class="s-default-content">
+                <a href="<%= url %>" target="_blank">
+                    <div class="s-default-title"><%=id %> <%= title %></div>
+                </a>
+
+                <div class="s-default-description"><%= summary %></div>
+            </div>
+            <div class="s-attribution">
+                <div class="s-source"><a href="<%= url %>" target="_blank"><img src="http://g.etfv.co/<%= url %>" style="max-width: 16px" border="0"></a></div>
+                <div class="s-author"><a href="<%= url %>" target="_blank" class="s-author-name"><%= site_url %></a></div>
+                <a href="<%= url %>" target="_blank" class="s-posted">
+                <div data-timestamp="Sat Oct 29 2011 15:31:24 GMT+0900 (KST)" class="result-timestamp">seconds ago</div>
+            </a>
+                <div><span class="delete-history" id="<%= id %>" style='border: 1px solid;'>> delete</span></div>
+            </div>
+            <div class="s-clear"></div>
+        </div>
+    </li>
+</script>
+</%text>
+        
+</body>
+</html>
