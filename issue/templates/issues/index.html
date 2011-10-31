@@ -63,23 +63,31 @@ table th { text-align: left; }
 </style>
 </%block>
 % if 'tag' in request.GET:
-    <div>태그 : ${request.GET['tag']}</div>
-% endif
-<div>
-% for issue in objects:
-    <h1 class="title" style="border-bottom: none;">
-    	<a href="/issues/${issue.id}">${issue.title}</a>
-    </h1>
-    <div style="float:left; margin:0 10px">${issue.content|images}</div>
-    <div class="issue_content" style="padding-bottom: 20px">${issue.content|strip_tags,summary}</div>
-    <div style="clear: left; float:right; margin-top: 7px; margin-right: 20px; ">
-        <span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span>
-    </div>
-    <div class="issue_tags" style="clear: left; padding: 5px 10px; border-bottom: 1px dotted rgb(75,84,105);">
-    태그:
-    % for tag in issue.tags.all():
-        <a href="/issues?tag=${tag.name}">${tag.name}</a>
+<div>태그 :
+    % for tag in request.GET.getlist('tag'):
+    ${tag}
     % endfor
-    </div>
-% endfor
 </div>
+% endif
+% if objects.count() != 0:
+<div>
+    % for issue in objects:
+        <h1 class="title" style="border-bottom: none;">
+            <a href="/issues/${issue.id}">${issue.title}</a>
+        </h1>
+        <div style="float:left; margin:0 10px">${issue.content|images}</div>
+        <div class="issue_content" style="padding-bottom: 20px">${issue.content|strip_tags,summary}</div>
+        <div style="clear: left; float:right; margin-top: 7px; margin-right: 20px; ">
+            <span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span>
+        </div>
+        <div class="issue_tags" style="clear: left; padding: 5px 10px; border-bottom: 1px dotted rgb(75,84,105);">
+        태그:
+        % for tag in issue.tags.all():
+            <a href="/issues?tag=${tag.name}">${tag.name}</a>
+        % endfor
+        </div>
+    % endfor
+</div>
+% else:
+    <h1 class="title">찾으시는 이슈가 없습니다.</h1>
+% endif

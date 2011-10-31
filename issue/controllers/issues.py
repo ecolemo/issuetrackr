@@ -6,8 +6,9 @@ from issue.models import Issue, Tag
 
 def index(request, resource_id):
     objects = Issue.objects.order_by('-updated')
-    if 'tag' in request.GET and Tag.objects.filter(name=request.GET['tag']).exists():
-        objects = objects.filter(tags__name=request.GET['tag'])
+    if 'tag' in request.GET:
+        for tag in request.GET.getlist('tag'):
+            objects = objects.filter(tags__name=tag)
     return render_to_response('issues/index.html', locals())
 
 @login_required
