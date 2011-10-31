@@ -1,7 +1,33 @@
 <%inherit file="/base.html"/>
 <%block name="head">
 <script type="text/javascript" src="/static/jquery/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="/static/underscore-min.js"></script>
 <script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
+
+<style>
+    .s-result {
+        color: #777;
+        font-size: 11px;
+        line-height: 15px;
+        padding: 5px
+    }
+
+    .r-element {
+        list-style: none;
+        margin: 10px 10px 0;
+        padding: 0 0 3px;
+        background: #fff;
+        border: 1px solid #ccc;
+        -webkit-box-shadow: inset 0 -3px 0 #eee;
+        -moz-box-shadow: inset 0 -3px 0 #eee;
+        box-shadow: inset 0 -3px 0 #eee;
+    }
+
+    .s-element.r-element .s-element-content, .s-element.s-element-video .s-element-content {
+        display: block
+    }
+
+</style>
 <script type="text/javascript">
 $(function() {
 	CKEDITOR.replace( 'editor', {} )
@@ -59,7 +85,6 @@ $(function() {
 <input type="submit" value="댓글 쓰기">
 </div>
 </form>
-
 <%block name="sidebar_content">
 <div class="sidebar_issue">
     <h5 style="margin-top: 10px">태그 연관 이슈</h5>
@@ -73,5 +98,67 @@ $(function() {
         % endfor
         % endfor
     </ul>
+    <div id="cell-items"></div>
+    <script language="javascript">
+    cellList = [];
+    recentIdx = 0;
+
+    $.ajax({
+        url: '/historic/_/scrap',
+        data: ({keyword: '${"".join([e.name for e in issue.tags.all()])}'} ),
+        success: function(msgs) {
+            for (var idx in msgs) {
+                var msg = msgs[idx];
+                cellList.push(msg);
+                msg.id = recentIdx; recentIdx++;
+                var templateCell = _.template($('#item-template').html());
+                $("#cell-items").append(templateCell(msg));
+            }
+            $('.to-comment').click(function() {
+                for (idx in cellList) {
+                    msg = cellList[idx];
+                    if (msg.id == this.id) {
+                        var editor = CKEDITOR.instances.editor;
+                        var templateCell = _.template($('#item-template').html());
+                        editor.insertHtml( templateCell(msg));
+                        return;
+                    }
+                }
+
+            });
+        },
+        failure: function(msg) {
+            alert(msg);
+        }
+    });
+    </script>
+
 </div>
 </%block>
+
+<%text>
+<script type="text/template" id="item-template">
+    <div>
+    <li class="r-element r-element-link">
+        <div class="s-default s-result s-element-content">
+            <div class="s-default-content">
+                <a href="<%= url %>" target="_blank">
+                    <div class="s-default-title"><%=id %> <%= title %></div>
+                </a>
+
+                <div class="s-default-description"><%= summary %></div>
+            </div>
+            <div class="s-attribution">
+                <div class="s-source"><a href="<%= url %>" target="_blank"><img src="http://g.etfv.co/<%= url %>" style="max-width: 16px" border="0"></a></div>
+                <div class="s-author"><a href="<%= url %>" target="_blank" class="s-author-name"><%= site_url %></a></div>
+                <a href="<%= url %>" target="_blank" class="s-posted">
+                <div data-timestamp="Sat Oct 29 2011 15:31:24 GMT+0900 (KST)" class="result-timestamp">seconds ago</div>
+            </a>
+                <div><span class="to-comment" id="<%= id %>" style='border: 1px solid;'>> as comment</span></div>
+            </div>
+            <div class="s-clear"></div>
+        </div>
+    </li>
+    </div>
+</script>
+</%text>
