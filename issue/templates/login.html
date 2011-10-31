@@ -15,6 +15,8 @@ body, input, select, textarea {color:black; font-family:'돋움',dotum,Helvetica
 				   border: 2px solid #ddd; border-right: 2xp solid #ccc; border-bottom: 2px solid #ccc; border-radius: 5px; -webkit-border-radius: 5px;
 				   box-shadow:2px 2px 4px #ddd; -webkit-box-shadow: 2px 2px 4px #ddd;}
 .login-page #openid-url-input-area {margin-top: 30px;}
+.openid-identifier {background:url("/static/images/openid-large.png") center left no-repeat; padding-left:32px; line-height: 22px; font-size: 100%;}
+#openid_submit {border:1px solid #999; font-size: 100%; cursor:pointer;}
 </style>
 
 </head>
@@ -34,15 +36,14 @@ body, input, select, textarea {color:black; font-family:'돋움',dotum,Helvetica
       <a title="구글로 로그인" rel="nofollow" href="${ reverse_url('socialauth_begin', args=('google',))}?next=${request.REQUEST['next']}" style="background: #fff url(/static/images/openid-logos.png); background-position: -1px -101px" class="stack_exchange openid_large_btn"></a>
       <br/>
       <div id="openid-url-input-area">
-        <p>오픈아이디로도 로그인 할 수 있습니다.</p>
+        <p>오픈ID로도 로그인 할 수 있습니다.</p>
 	  </div>
       <form action="${ reverse_url('socialauth_begin', args=('openid',))}?next=${request.REQUEST['next']}" method="post">
         <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" />
         <input type="hidden" value="${request.REQUEST['next']}" name="next" />
         <div>
-          <label for="openid_identifier">오픈아이디</label>
-          <input id="openid_identifier" type="text" value="" name="openid_identifier" />
-          <input type="submit" value="Login" />
+          <input id="openid_identifier" class="openid-identifier" type="text" value="" name="openid_identifier" style="height:28px; width:300px;"/>
+          <input id="openid_submit" type="submit" value="로그인" style="height:28px;"/>
         </div>
       </form>
 	</div>
