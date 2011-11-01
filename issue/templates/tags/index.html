@@ -32,7 +32,7 @@ table th { text-align: left; }
         <tbody>
         % for tag in tags:
         <tr>
-            <td class="thumbnail_cell"><input type="checkbox" name="tag" value="${tag.name}"/> ${tag.name}</td>
+            <td class="thumbnail_cell"><input type="checkbox" id="tag_${tag.id}" name="tag" value="${tag.name}"/> <label for="tag_${tag.id}">${tag.name}</label></td>
             <td class="">${tag.issue_set.count()}</td>
         </tr>
         % endfor
