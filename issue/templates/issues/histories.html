@@ -7,17 +7,17 @@
 <h3>변경 기록</h3>
 <table width="100%">
     <tr>
-        <th width="20%">날짜</th>
-        <th width="30%">작성자</th>
-        <th width="25%">보기</th>
-        <th width="25%">복구</th>
+        <th>날짜</th>
+        <th>작성자</th>
+        <th>보기</th>
+        <th>복구</th>
     </tr>
     % for history in issue.issuehistory_set.order_by('-created'):
     <tr align="center">
-        <td width="20%">${history.created}</td>
-        <td width="30%">${history.writer}</td>
-        <td width="25%"><a href="/issues/${history.id}/history">보기</a></td>
-        <td width="25%"><a href="/issues/${history.id}/restore">복구</a></td>
+        <td style="width:200px">${history.created}</td>
+        <td>${history.writer}</td>
+        <td><a href="/issues/${history.id}/history">보기</a></td>
+        <td><a href="/issues/${history.id}/restore">복구</a></td>
     </tr>
     % endfor
 </table>
