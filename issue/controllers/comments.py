@@ -9,6 +9,7 @@ from issue.models import Issue
 def create(request, resource_id):
     issue = Issue.objects.get(id=request.POST['issue'])
     issue.comment_set.create(writer=request.user, content=request.POST['content'])
+    issue.save()
     return redirect('/issues/%d' % issue.id)
 
 @login_required
