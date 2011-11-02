@@ -28,14 +28,50 @@ class Issue(models.Model):
     def __unicode__(self):
         return self.title
 
+    def save_history(self):
+        history = self.issuehistory_set.create(writer=self.writer, title=self.title, content=self.content, status=self.status, created=self.updated)
+        history.tags = self.tags.all()
+        history.save()
+
 class Comment(models.Model):
     writer = models.ForeignKey(User)
     issue = models.ForeignKey(Issue)
     content = models.TextField()
-    status = models.CharField(max_length=50, default='new')
+    status = models.CharField(max_length=50, default='open')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    
+
+class IssueHistory(models.Model):
+    target = models.ForeignKey(Issue)
+    writer = models.ForeignKey(User)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    status = models.CharField(max_length=50, default='open')
+    created = models.DateTimeField(auto_now_add=True)
+    tags = models.ManyToManyField(Tag)
+
+    def __unicode__(self):
+        return str(self.created)
+
+    def restore(self):
+        issue = self.target
+        issue.title = self.title
+        issue.content = self.content
+        issue.writer = self.writer
+        issue.status = self.status
+        issue.tags = self.tags.all()
+        issue.save()
+        issue.save_history()
+
+class CommentHistory(models.Model):
+    target = models.ForeignKey(Comment)
+    writer = models.ForeignKey(User)
+    issue = models.ForeignKey(Issue)
+    content = models.TextField()
+    status = models.CharField(max_length=50, default='open')
+    created = models.DateTimeField(auto_now_add=True)
+
+
 class Attachment(models.Model):
     storage_path = os.environ['HOME'] + '/issuetrackr_files'
     

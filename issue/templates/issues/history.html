@@ -1,0 +1,19 @@
+<%inherit file="/base.html"/>
+<%block name="head">
+</%block>
+<h1 class="title">
+    ${history.title}
+</h1>
+<h3>작성자 : ${history.writer} | 작성일 : ${history.created}</h3>
+<div class="issue_content">${history.content}</div>
+<h4 class="title issue_tags">태그</h4>
+<ul class="issue_tags">
+    % for tag in history.tags.all():
+    <li>${tag.name}</li>
+    % endfor
+</ul>
+<div style="text-align: center; margin-top: 10px;">
+    <span style="vertical-align:middle; padding:4px; margin-top:10px; margin-right: 5px; border: 1px solid;">
+        <a href="/issues/${history.target.id}/histories">목록보기</a>
+    </span>
+</div>

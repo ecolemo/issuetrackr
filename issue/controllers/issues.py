@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.shortcuts import redirect
 from djangobp.makohelper import render_to_response
-from issue.models import Issue, Tag
+from issue.models import Issue, Tag, IssueHistory
 
 def index(request, resource_id):
     objects = Issue.objects.order_by('-updated')
@@ -19,6 +19,7 @@ def new(request, resource_id):
 @login_required
 def create(request, resource_id):
     issue = request.user.issue_set.create(title=request.POST['title'], content=request.POST['content'])
+    issue.save_history()
     issue.update_tags(request.POST['tags'])
 
     return redirect('/issues/%d' % issue.id)
@@ -41,10 +42,25 @@ def update(request, resource_id):
 
     issue.update_tags(request.POST['tags'])
 
+    issue.save_history()
+
     return redirect('/issues/%d' % issue.id)
 
 def destroy(request, resource_id):
     issue = Issue.objects.get(id=resource_id)
     issue.delete()
     return redirect('/issues/')
-    
+
+
+def histories(request, resource_id):
+    issue = Issue.objects.get(id=resource_id)
+    return render_to_response('issues/histories.html', locals())
+
+def history(request, resource_id):
+    history = IssueHistory.objects.get(id=resource_id)
+    return render_to_response('issues/history.html', locals())
+
+def restore(request, resource_id):
+    history = IssueHistory.objects.get(id=resource_id)
+    history.restore()
+    return redirect('/issues/%d' % history.target.id)

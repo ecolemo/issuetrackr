@@ -1,6 +1,5 @@
 <%inherit file="/base.html"/>
 <%block name="head">
-<script type="text/javascript" src="/static/jquery/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="/static/underscore-min.js"></script>
 <script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
 
@@ -50,7 +49,7 @@ $(function() {
 </div>
 <div class="issue_content">${issue.content}</div>
 <div style="text-align:right; margin: 10px;">
-    ${self.helper.avatar(issue.writer, 32)}<span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span><br/>
+    ${self.helper.avatar(issue.writer, 32)}<span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span> &nbsp; <a href="/issues/${issue.id}/histories">변경기록</a><br/>
 </div>
 <h4 class="title issue_tags">태그</h4>
 <ul class="issue_tags">

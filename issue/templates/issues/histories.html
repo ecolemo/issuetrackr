@@ -1,0 +1,35 @@
+<%inherit file="/base.html"/>
+<%block name="head">
+</%block>
+<h1 class="title">
+    ${issue.title}
+</h1>
+<h3>변경 기록</h3>
+<table width="100%">
+    <tr>
+        <th width="20%">날짜</th>
+        <th width="30%">작성자</th>
+        <th width="25%">보기</th>
+        <th width="25%">복구</th>
+    </tr>
+    % for history in issue.issuehistory_set.order_by('-created'):
+    <tr align="center">
+        <td width="20%">${history.created}</td>
+        <td width="30%">${history.writer}</td>
+        <td width="25%"><a href="/issues/${history.id}/history">보기</a></td>
+        <td width="25%"><a href="/issues/${history.id}/restore">복구</a></td>
+    </tr>
+    % endfor
+</table>
+<div style="text-align: center; margin-top: 30px;">
+    <span style="vertical-align:middle; padding:4px; margin-top:10px; margin-right: 5px; border: 1px solid;">
+        <a href="/issues/${history.target.id}">이슈 보기</a>
+    </span>
+</div>
+<script type="text/javascript">
+    $(function() {
+        var tr =$("tr").eq(1)
+        tr.find("a").eq(1).remove();
+        tr.find("td").eq(3).text("현재버전");
+    })
+</script>
