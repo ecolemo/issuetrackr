@@ -86,7 +86,7 @@ $(function() {
     </div>
     </form>
 % else:
-    <div style="padding: 20px; text-align: center;"><a href="/accounts/login?next=${request.get_full_path()}">댓글을 쓰려면 로그인해주세요.</a></div>
+    <div style="padding: 20px; text-align: center;"><a href="/accounts/login?next=${request.get_full_path()}">댓글 쓰기</a></div>
 % endif
 
 <%block name="sidebar_content">
@@ -123,8 +123,8 @@ $(function() {
                     msg = cellList[idx];
                     if (msg.id == this.id) {
                         var editor = CKEDITOR.instances.editor;
-                        var templateCell = _.template($('#item-template').html());
-                        editor.insertHtml( templateCell(msg));
+                        var templateCell = _.template($('#comment-item-template').html());
+                        editor.insertHtml( templateCell(msg)+"\n");
                         return;
                     }
                 }
@@ -153,16 +153,18 @@ $(function() {
                 <div class="s-default-description"><%= summary %></div>
             </div>
             <div class="s-attribution">
-                <div class="s-source"><a href="<%= url %>" target="_blank"><img src="http://g.etfv.co/<%= url %>" style="max-width: 16px" border="0"></a></div>
-                <div class="s-author"><a href="<%= url %>" target="_blank" class="s-author-name"><%= site_url %></a></div>
-                <a href="<%= url %>" target="_blank" class="s-posted">
-                <div data-timestamp="Sat Oct 29 2011 15:31:24 GMT+0900 (KST)" class="result-timestamp">seconds ago</div>
-            </a>
+                <div class="s-source"><a href="<%= url %>" target="_blank"><img src="http://g.etfv.co/<%= url %>" style="max-width: 16px" border="0"><span class="s-author-name"><%= site_url %></span></a></div>
                 <div><span class="to-comment" id="<%= id %>" style='border: 1px solid;'>> as comment</span></div>
             </div>
             <div class="s-clear"></div>
         </div>
     </li>
     </div>
+</script>
+<script type="text/template" id="comment-item-template">
+<div>
+from <a href="<%= url %>"><img src="http://g.etfv.co/<%= url %>" style="max-width: 16px" border="0"> <%= title %></a><br/>
+<%= summary %>
+</div>
 </script>
 </%text>
