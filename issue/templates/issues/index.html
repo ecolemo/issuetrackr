@@ -54,11 +54,27 @@ table th { text-align: left; }
 }
 
 .issue_info ul {
+    font-size: 10px;
     list-style: none;
     padding: 8px;
     margin: 4px;
     border: 1px solid #cccccc;
 }
+
+.comment_item {
+    float:right;
+    margin-left: 20px;
+    width: 48px;
+    height: 48px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    background: none repeat scroll 0 0 #EEF7F8;
+    color: #3A6231;
+}
+
 
 </style>
 </%block>
@@ -74,6 +90,10 @@ table th { text-align: left; }
     % for issue in objects:
         <h1 class="title" style="border-bottom: none;">
             <a href="/issues/${issue.id}">${issue.title}</a>
+            <div class="comment_item">
+                <div style="padding-top: 8px; font-size:18px;">${len(issue.comment_set.order_by('-updated'))}</div>
+                <div style="font-size:12px;">댓글</div>
+            </div>
         </h1>
         <div style="float:left; margin:0 10px">${issue.content|images}</div>
         <div class="issue_content" style="padding-bottom: 20px">${issue.content|strip_tags,summary}</div>
