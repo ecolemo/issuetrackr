@@ -23,6 +23,7 @@ ul.issue_tags li { list-style: none}
 .sidebar { float: right; width: 180px; padding: 10px; background: rgb(232,232,255) }
 .profile { margin: 5px; }
 .main { width: 800px; }
+.footer { margin-top:50px; text-align: center;}
 
 .status_new { color: white; margin: 5px; vertical-align:middle; font-size: 11pt; padding: 3px 5px; background-color: #FF881F; border: 1px solid #8F2800}
 
