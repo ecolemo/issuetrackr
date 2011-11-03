@@ -83,6 +83,14 @@
 
     });
 
+    $(document).ready(function() {
+        var loading = $('<img alt="loading" src="/static/loading.gif">').appendTo(document.body).hide();
+        loading.ajaxStart(function() {
+          $(this).show();
+        }).ajaxStop(function() {
+          $(this).hide();
+        });
+    });
 </script>
 
 <%text>
