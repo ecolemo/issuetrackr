@@ -27,6 +27,8 @@ def create(request, resource_id):
 def show(request, resource_id):
     csrf_token = csrf(request)['csrf_token']
     issue = Issue.objects.get(id=resource_id)
+    issue.read_count += 1
+    issue.save()
     return render_to_response('issues/show.html', locals())
 
 def edit(request, resource_id):
