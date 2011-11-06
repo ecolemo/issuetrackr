@@ -61,9 +61,21 @@ table th { text-align: left; }
     border: 1px solid #cccccc;
 }
 
+.read_item {
+    float:right;
+    width: 48px;
+    height: 48px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    background: none repeat scroll 0 0 #EEF7F8;
+    color: #3A6231;
+}
+
 .comment_item {
     float:right;
-    margin-left: 20px;
     width: 48px;
     height: 48px;
     font-size: 14px;
@@ -93,6 +105,10 @@ table th { text-align: left; }
             <div class="comment_item">
                 <div style="padding-top: 8px; font-size:18px;">${len(issue.comment_set.order_by('-updated'))}</div>
                 <div style="font-size:12px;">댓글</div>
+            </div>
+            <div class="read_item">
+                <div style="padding-top: 8px; font-size:18px;">${issue.read_count}</div>
+                <div style="font-size:12px;">읽음</div>
             </div>
         </h1>
         <div style="float:left; margin:0 10px">${issue.content|images}</div>
