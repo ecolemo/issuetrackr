@@ -106,10 +106,6 @@ table th { text-align: left; }
                 <div style="padding-top: 8px; font-size:18px;">${len(issue.comment_set.order_by('-updated'))}</div>
                 <div style="font-size:12px;">댓글</div>
             </div>
-            <div class="read_item">
-                <div style="padding-top: 8px; font-size:18px;">${issue.read_count}</div>
-                <div style="font-size:12px;">읽음</div>
-            </div>
         </h1>
         <div style="float:left; margin:0 10px">${issue.content|images}</div>
         <div class="issue_content" style="padding-bottom: 20px">${issue.content|strip_tags,summary}</div>
