@@ -47,3 +47,29 @@ table.edit td input { width: 80%}
 
 .issue_content { padding: 10px; font-family: "NanumGothic", "나눔고딕"; line-height: 1.5em; }
 .issue_content h1 { border: none }
+
+.comment_item {
+    float:right;
+    width: 48px;
+    height: 48px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    background: none repeat scroll 0 0 #EEF7F8;
+    color: #3A6231;
+}
+
+.read_item {
+    float:right;
+    width: 48px;
+    height: 48px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    background: none repeat scroll 0 0 #EEF7F8;
+    color: #3A6231;
+}
