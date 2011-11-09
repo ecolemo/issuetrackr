@@ -1,0 +1,58 @@
+<had>
+    <script type="text/javascript" src="/static/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/underscore-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/storify.css"/>
+</head>
+
+<form id="form">
+    URL : <input type="text" id="url" name="url" size="40"><input type="button" value="scrap" id="add_cell">
+</form>
+<div id="cell-list" style="width: 45%; border: 1px solid; float:left;">
+    <span>Cell</span>
+    <div id="cell-items"></div>
+</div>
+
+<script language="JavaScript">
+    recentIdx = 0;
+    
+    $('#add_cell').click(function() {
+        var url = $('#url').val();
+        $.ajax({
+            url: '/scraper/_/scrap',
+            data: ({url: url} ),
+            success: function(msg) {
+                msg['summary'] = '';
+                msg['url'] = '';
+                msg['id'] = '';
+                msg['site_url'] = '';
+                var templateCell = _.template($('#item-template').html());
+                $("#cell-items").append(templateCell(msg));
+            },
+            failure: function(msg) {
+                alert(msg);
+            }
+        });
+
+    });
+</script>
+<script type="text/template" id="item-template">
+    <li class="r-element r-element-link">
+        <div class="s-default s-result s-element-content">
+            <div class="s-default-content">
+                <a href="<%= url %>" target="_blank">
+                    <div class="s-default-title"><%=id %> <%= title %></div>
+                </a>
+
+                <div class="s-default-description"><%= summary %></div>
+            </div>
+            <div class="s-attribution">
+                <div class="s-source"><a href="<%= url %>" target="_blank"><img src="<%= images[0]['url'] %>" style="max-width: 16px" border="0"></a></div>
+                <div class="s-author"><a href="<%= url %>" target="_blank" class="s-author-name"><%= site_url %></a></div>
+                <a href="<%= url %>" target="_blank" class="s-posted">
+                <div data-timestamp="Sat Oct 29 2011 15:31:24 GMT+0900 (KST)" class="result-timestamp">seconds ago</div>
+            </a>
+            </div>
+            <div class="s-clear"></div>
+        </div>
+    </li>
+</script>

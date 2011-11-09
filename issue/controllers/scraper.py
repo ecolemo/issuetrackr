@@ -39,10 +39,29 @@ def image(request, resource_id):
 
     return response
 
+def extractSiteUrl(url):
+    import re
+    return re.search("(?P<url>https?://[^\s]+)/", url).group("url")
+
+def extractImageUrls(url, soup):
+    siteUrl = extractSiteUrl(url)
+
+    imageUrls = set([img['src'] for img in soup('img')])
+    result = []
+    for e in imageUrls:
+        if not e.startswith('http://') and not e.startswith('https://'):
+            result.append(siteUrl + e)
+        else:
+            result.append(e)
+
+    return result
+
 def scrapping(url):
     html = urllib2.urlopen(url).read()
     soup = BeautifulSoup(html)
-    return soup.title.text, set([img['src'] for img in soup('img')])
+    title = soup.title.text
+    imageUrls = extractImageUrls(url, soup)
+    return title, imageUrls
 
 def makeThumbnails(imageUrls):
     thumbnailCandidates = []
