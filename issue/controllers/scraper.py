@@ -12,6 +12,8 @@ class HttpResponseJSON(HttpResponse):
     def __init__(self, data):
         HttpResponse.__init__(self, simplejson.dumps(data, ensure_ascii=False), content_type='application/json')
 
+tempfile_storage_path = os.environ['HOME'] + '/issuetrackr_files/tmp_scraper/'
+
 def index(request, resource_id):
     return render_to_response('scraper/index.html', locals())
 
@@ -30,7 +32,7 @@ def scrap(request, resource_id):
 
 def image(request, resource_id):
     imageUrl = request.GET['url']
-    fileName = "./tmp_scraper/" + imageUrl.replace('/','_')
+    fileName = tempfile_storage_path + imageUrl.replace('/','_')
     extension = os.path.splitext(fileName)[1][1:]
     response = HttpResponse(mimetype='image/%s' % (extension))
     f=open(fileName)
@@ -67,7 +69,7 @@ def makeThumbnails(imageUrls):
     thumbnailCandidates = []
     for imageUrl in imageUrls:
         fileName = imageUrl.replace('/','_')
-        urlretrieve(imageUrl, './tmp_scraper/' + fileName)
+        urlretrieve(imageUrl, tempfile_storage_path + fileName)
         size = imageSize(fileName)
         thumbnailCandidates.append({'url':imageUrl, 'fileName': fileName, 'width' : size[0], 'height':size[1]})
 
@@ -77,7 +79,7 @@ def makeThumbnails(imageUrls):
 
 def makeThumbnailImage(imageInfo):
     fileName = imageInfo['fileName']
-    image = Image.open('./tmp_scraper/' + fileName)
+    image = Image.open(tempfile_storage_path + fileName)
     THUMBNAIL_MAX_WIDTH = 120
 
     newWidth = int(min(THUMBNAIL_MAX_WIDTH, imageInfo['width']))
@@ -90,7 +92,7 @@ def makeThumbnailImage(imageInfo):
     imageInfo['height'] = newHeight
 
 def imageSize(fileName):
-    return Image.open('./tmp_scraper/' + fileName).size
+    return Image.open(tempfile_storage_path + fileName).size
 
 def imageCompare(fileOne, fileTwo):
     areaOne = fileOne['width'] * fileOne['height']
