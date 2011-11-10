@@ -6,7 +6,7 @@ from BeautifulSoup import BeautifulSoup
 from urllib import urlretrieve
 import Image
 import os
-from djangobp.makohelper import render_to_response
+from djangobp.route import render_to_response
 
 class HttpResponseJSON(HttpResponse):
     def __init__(self, data):
