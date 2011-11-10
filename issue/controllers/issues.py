@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.shortcuts import redirect
@@ -18,7 +19,7 @@ def new(request, resource_id):
 
 @login_required
 def create(request, resource_id):
-    issue = request.user.issue_set.create(title=request.POST['title'], content=request.POST['content'])
+    issue = request.user.issue_set.create(title=request.POST['title'], content=request.POST['content'], updated=datetime.now())
     issue.save_history()
     issue.update_tags(request.POST['tags'])
 
@@ -27,6 +28,8 @@ def create(request, resource_id):
 def show(request, resource_id):
     csrf_token = csrf(request)['csrf_token']
     issue = Issue.objects.get(id=resource_id)
+    issue.read_count += 1
+    issue.save()
     return render_to_response('issues/show.html', locals())
 
 def edit(request, resource_id):

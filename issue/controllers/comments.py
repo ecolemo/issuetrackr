@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.shortcuts import redirect
@@ -9,6 +10,7 @@ from issue.models import Issue
 def create(request, resource_id):
     issue = Issue.objects.get(id=request.POST['issue'])
     issue.comment_set.create(writer=request.user, content=request.POST['content'])
+    issue.updated = datetime.now()
     issue.save()
     return redirect('/issues/%d' % issue.id)
 

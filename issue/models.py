@@ -14,8 +14,9 @@ class Issue(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     status = models.CharField(max_length=50, default='open')
+    read_count = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField()
     tags = models.ManyToManyField(Tag)
 
     def update_tags(self, tag_str):

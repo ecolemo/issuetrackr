@@ -13,6 +13,10 @@ class HttpResponseJSON(HttpResponse):
 def index(request, resource_id):
     return render_to_response('historic/index.html', locals())
 
+import re
+def strip_tags(text):
+    return re.sub('<[^>]+>', '', text)
+
 def scrap(request, resource_id):
     keyword = request.GET['keyword']
 
@@ -27,7 +31,7 @@ def scrap(request, resource_id):
     results = [{'title' : e['title'],
                'url' : e['url'],
                'site_url' : e['visibleUrl'],
-               'summary' : e['content']
+               'summary' : strip_tags(e['content'])
                } for e in searchResults]
 
     return HttpResponseJSON(results)
