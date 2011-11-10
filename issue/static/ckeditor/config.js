@@ -20,4 +20,5 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removePlugins = 'tab';
 	config.filebrowserUploadUrl = '/attachments/_/create';
     config.extraPlugins = 'tabindent,simpleimage,mediaembed,scrap';
+    config.contentsCss = '/static/style.css';
 }
