@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.shortcuts import redirect
-from djangobp.makohelper import render_to_response
+from djangobp.route import render_to_response
 from issue.models import Issue
 
 

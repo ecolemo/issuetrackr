@@ -4,7 +4,7 @@ import urllib2
 import urllib
 from django.http import HttpResponse
 from BeautifulSoup import BeautifulSoup
-from djangobp.makohelper import render_to_response
+from djangobp.route import render_to_response
 
 class HttpResponseJSON(HttpResponse):
     def __init__(self, data):
