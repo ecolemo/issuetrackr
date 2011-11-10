@@ -79,7 +79,8 @@ def makeThumbnails(imageUrls):
 
 def makeThumbnailImage(imageInfo):
     fileName = imageInfo['fileName']
-    image = Image.open(tempfile_storage_path + fileName)
+    fullFilePath = tempfile_storage_path + fileName
+    image = Image.open(fullFilePath)
     THUMBNAIL_MAX_WIDTH = 120
 
     newWidth = int(min(THUMBNAIL_MAX_WIDTH, imageInfo['width']))
@@ -87,7 +88,7 @@ def makeThumbnailImage(imageInfo):
     resizedImage = image.resize((newWidth,newHeight))
 
     # overwrite
-    resizedImage.save(fileName)
+    resizedImage.save(fullFilePath)
     imageInfo['width'] = newWidth
     imageInfo['height'] = newHeight
 
