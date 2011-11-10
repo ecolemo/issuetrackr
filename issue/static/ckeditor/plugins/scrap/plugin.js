@@ -29,21 +29,13 @@
                             }
                         ],
                         onOk:function() {
-                            for (var i = 0; i < window.frames.length; i++) {
-                                if (window.frames[i].name == 'iframeScrap') {
-                                    var content = window.frames[i].document.getElementById("embed").value;
-                                }
-                            }
-                            var final_html = '<div class="add_scrap">' + content + '</div>';
-                            editor.insertHtml(final_html);
-                            var updated_editor_data = editor.getData();
-                            editor.setData(updated_editor_data);
+                            var content = $('#iframeScrap').contents().find('#scrap-result').html();
+                            editor.insertHtml(content);
                         }
                     };
                 });
 
                 editor.addCommand('Scrap', new CKEDITOR.dialogCommand('ScrapDialog'));
-
                 editor.ui.addButton('Scrap',
                     {
                         label:'Scrap',
