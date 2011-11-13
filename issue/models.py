@@ -25,7 +25,11 @@ class Issue(models.Model):
         for tag in tags:
             if tag.strip() == '': continue
             self.tags.add(Tag.objects.get_or_create(name=tag.strip())[0])
-    
+
+    @property
+    def vote_score(self):
+        return self.vote_set.filter(is_agree=1).count() - self.vote_set.filter(is_agree=0).count()
+
     def __unicode__(self):
         return self.title
 
@@ -98,3 +102,12 @@ class Attachment(models.Model):
 
     def __unicode__(self):
         return self.filename
+
+class Vote(models.Model):
+    voter = models.ForeignKey(User)
+    issue = models.ForeignKey(Issue)
+    is_agree = models.BooleanField(default=1)
+    created = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.voter.username + ":" + str(self.is_agree)

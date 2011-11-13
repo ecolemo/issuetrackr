@@ -4,6 +4,7 @@ from django.core.context_processors import csrf
 from django.shortcuts import redirect
 from djangobp.route import render_to_response
 from issue.models import Issue, Tag, IssueHistory
+from django.core.exceptions import ObjectDoesNotExist
 
 def index(request, resource_id):
     objects = Issue.objects.order_by('-updated')
@@ -30,6 +31,14 @@ def show(request, resource_id):
     issue = Issue.objects.get(id=resource_id)
     issue.read_count += 1
     issue.save()
+
+    if request.user.is_anonymous():
+        user_vote = None
+    else:
+        try:
+            user_vote = issue.vote_set.get(voter=request.user)
+        except ObjectDoesNotExist:
+            user_vote = None
     return render_to_response('issues/show.html', locals())
 
 def edit(request, resource_id):

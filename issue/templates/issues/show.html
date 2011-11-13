@@ -38,7 +38,80 @@
 </style>
 <script type="text/javascript">
 $(function() {
-	CKEDITOR.replace( 'editor', {} )
+	CKEDITOR.replace( 'editor', {} );
+
+    voteHandler = function(isAgree) {
+        $.ajax({
+           type:'POST',
+           url:'/votes/_/create',
+           data:{issue: ${issue.id}, is_agree: isAgree},
+           success: function(msg) {
+               if (msg.status == 'ok') {
+                   $('#vote-score').text(msg.vote_score);
+                   $('#vote-up').unbind('click');
+                   $('#vote-down').unbind('click');
+
+                   $('#vote-up').click(function() {
+                       destroyHandler(msg.vote_id);
+                   });
+                   $('#vote-down').click(function() {
+                       destroyHandler(msg.vote_id);
+                   });
+               }
+               else {
+                   alert('중복 투표 입니다');
+               }
+           },
+           failure: function(msg) {
+               alert('fail');
+           }
+        });
+    }
+
+    destroyHandler = function(id) {
+        $.ajax({
+           type:'POST',
+           url:'/votes/'+id+'/destroy',
+           success: function(msg) {
+               if (msg.status == 'ok') {
+                   $('#vote-score').text(msg.vote_score);
+                   $('#vote-up').unbind('click');
+                   $('#vote-down').unbind('click');
+
+                   $('#vote-up').click(function() {
+                       voteHandler(1);
+                   });
+                   $('#vote-down').click(function() {
+                       voteHandler(0);
+                   });
+               }
+               else {
+                   alert('중복 투표 입니다');
+               }
+           },
+           failure: function(msg) {
+               alert('fail');
+           }
+        });
+    }
+
+    %if not request.user.is_anonymous():
+    $('#vote-up').click(function() {
+       % if user_vote == None:
+        voteHandler(1);
+       % else:
+        destroyHandler(${user_vote.id});
+       % endif
+
+    });
+    $('#vote-down').click(function() {
+        % if user_vote == None:
+        voteHandler(0);
+        % else:
+        destroyHandler(${user_vote.id});
+        %endif
+    });
+    %endif
 })
 </script>
 </%block>
@@ -54,7 +127,7 @@ $(function() {
 	${issue.title}
 </h1>
 <div style="text-align: right; margin-top: 10px">
-<span style="vertical-align:middle; padding:4px; margin-top:10px; margin-right: 5px; border: 1px solid;"><a href="/issues/${issue.id}/edit">수정</a></span>
+<span id="vote-up">Up</span>|<span id="vote-down">Down</span>|<span id='vote-score'>${issue.vote_score}</span>|<span style="vertical-align:middle; padding:4px; margin-top:10px; margin-right: 5px; border: 1px solid;"><a href="/issues/${issue.id}/edit">수정</a></span>
 </div>
 <div class="issue_content">${issue.content}</div>
 <div style="text-align:right; margin: 10px;">
@@ -112,7 +185,7 @@ $(function() {
         % endfor
     </ul>
     <div id="cell-items"></div>
-    <script language="javascript">
+<script language="javascript">
     cellList = [];
     recentIdx = 0;
 
@@ -145,7 +218,7 @@ $(function() {
             alert(msg);
         }
     });
-    </script>
+</script>
 
 </div>
 </%block>
