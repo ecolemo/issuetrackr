@@ -23,7 +23,7 @@ def scrap(request, resource_id):
     text = urllib2.urlopen(req).read()
     searchResults = simplejson.loads(text)['responseData']['results']
     results = [{'title' : e['title'],
-               'url' : e['url'],
+               'url' : urllib.unquote(e['url']),
                'site_url' : e['visibleUrl'],
                'summary' : strip_tags(e['content'])
                } for e in searchResults]
