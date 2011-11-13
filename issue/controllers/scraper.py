@@ -1,16 +1,11 @@
 # coding:utf8
-import simplejson
 from django.http import HttpResponse
 import urllib2
 from BeautifulSoup import BeautifulSoup
 from urllib import urlretrieve
 import Image
 import os
-from djangobp.route import render_to_response
-
-class HttpResponseJSON(HttpResponse):
-    def __init__(self, data):
-        HttpResponse.__init__(self, simplejson.dumps(data, ensure_ascii=False), content_type='application/json')
+from djangobp.route import render_to_response, render_to_json
 
 tempfile_storage_path = os.environ['HOME'] + '/issuetrackr_files/tmp_scraper/'
 
@@ -28,7 +23,7 @@ def scrap(request, resource_id):
         'images':thumbnailImages
     }
 
-    return HttpResponseJSON(data)
+    return render_to_json(data)
 
 def image(request, resource_id):
     imageUrl = request.GET['url']

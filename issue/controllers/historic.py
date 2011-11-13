@@ -2,13 +2,7 @@
 import simplejson
 import urllib2
 import urllib
-from django.http import HttpResponse
-from BeautifulSoup import BeautifulSoup
-from djangobp.route import render_to_response
-
-class HttpResponseJSON(HttpResponse):
-    def __init__(self, data):
-        HttpResponse.__init__(self, simplejson.dumps(data, ensure_ascii=False), content_type='application/json')
+from djangobp.route import render_to_response, render_to_json
 
 def index(request, resource_id):
     return render_to_response('historic/index.html', locals())
@@ -34,7 +28,7 @@ def scrap(request, resource_id):
                'summary' : strip_tags(e['content'])
                } for e in searchResults]
 
-    return HttpResponseJSON(results)
+    return render_to_json(results)
 
 def addToHistory(request, resource_id):
     title = request.POST['title']
@@ -46,4 +40,4 @@ def addToHistory(request, resource_id):
                'site_url' : site_url,
                'summary' : summary}]
     
-    return HttpResponseJSON(results)
+    return render_to_json(results)
