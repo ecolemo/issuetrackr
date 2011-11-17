@@ -399,7 +399,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		contents : [
 			{
 				id : 'info',
-				label : linkLang.info,
+				label : linkLang.info, // '링크정보' 텝의 라벨
 				title : linkLang.info,
 				elements :
 				[
@@ -408,7 +408,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						type : 'select',
 						label : linkLang.type,
 						'default' : 'url',
-						items :
+						items : // 링크 종류 3가지.
 						[
 							[ linkLang.toUrl, 'url' ],
 							[ linkLang.toAnchor, 'anchor' ],
@@ -419,9 +419,13 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						{
 							if ( data.type )
 								this.setValue( data.type );
+
+                            $('#scrapResult').text('no scrap result');
 						},
 						commit : function( data )
 						{
+                            // '예' 클릭 시 호출.
+                            // URL 선택 시 data.type = 'url' 이 들어감.
 							data.type = this.getValue();
 						}
 					},
@@ -473,6 +477,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 										},
 										onKeyUp : function()
 										{
+                                            // 링크에 입력이 있을 때마다 처리됨. 프로토콜 스트링 입력시 자동 제거
 											this.allowOnChange = false;
 											var	protocolCmb = this.getDialog().getContentElement( 'info', 'protocol' ),
 												url = this.getValue(),
@@ -541,11 +546,55 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								type : 'button',
 								id : 'browse',
 								hidden : 'true',
-								filebrowser : 'info:url',
+								filebrowser : 'info:url',   
 								label : commonLang.browseServer
 							}
 						]
 					},
+                    {
+                        type : 'checkbox',
+                        id : 'useScrap',
+                        label : 'Scrap',
+                        onClick : function() {
+                            if (this.getValue() == true) {
+                                $('#scrapResult').css('background-color','#FCFCFC');
+                                $('#scrapResult').text('');
+                                var dlg = CKEDITOR.dialog.getCurrent();
+                                var url = 'http://' + dlg.getContentElement('info', 'url').getValue();
+
+                                $.ajax({
+                                    url: '/scraper/_/scrap',
+                                    data: ({url: url} ),
+                                    success: function(msg) {
+                                        msg['summary'] = '';
+                                        msg['url'] = '';
+                                        msg['id'] = '';
+                                        msg['site_url'] = '';
+                                        if (msg.images.length != 0) {
+                                            var itemTemplate = '<li class="r-element r-element-link"><div class="s-default s-result s-element-content"><div class="s-default-content"><a href="<%= url %>" target="_blank"><div class="scrap-title"><%=id %> <%= title %></div></a><div class="s-default-description"><%= summary %></div></div><div class="s-attribution"><div class="s-source"><a href="<%= url %>" target="_blank"><img src="<%= images[0].url %>" style="max-width: 16px" border="0"></a></div><div class="s-author"><a href="<%= url %>" target="_blank" class="s-author-name"><%= site_url %></a></div><a href="<%= url %>" target="_blank" class="s-posted"><div class="scrap-description">no description</div></a></div><div class="s-clear"></div></div></li>';
+                                            var templateCell = _.template(itemTemplate);
+                                        }
+                                        else {
+                                            var itemTemplateNoImage = '<div class="r-element r-element-link"><div class="s-default s-result s-element-content"><div class="s-default-content"><a href="<%= url %>" target="_blank"><div class="scrap-title"><%=id %> <%= title %></div></a><div class="s-default-description"><%= summary %></div></div><div class="s-attribution"><div class="s-source"></div><div class="s-author"><a href="<%= url %>" target="_blank" class="s-author-name"><%= site_url %></a></div><a href="<%= url %>" target="_blank" class="s-posted"><div class="scrap-description">no description</div></a></div><div class="s-clear"></div></div></div>';
+                                            var templateCell = _.template(itemTemplateNoImage);
+                                        }
+                                        $("#scrapResult").html(templateCell(msg));
+                                    },
+                                    failure: function(msg) {
+                                        alert(msg);
+                                    }
+                                });
+
+                            }
+                            else {
+                                $('#scrapResult').css('background-color','#CCCCCC');
+                            }
+                        }
+                    },
+                    {
+                        type : 'html',
+                        html : "<div id='scrapResult' style='width:350px;height:100px; background-color: #CCCCCC;'></div>"
+                    },
 					{
 						type : 'vbox',
 						id : 'anchorOptions',
@@ -601,9 +650,11 @@ CKEDITOR.dialog.add( 'link', function( editor )
 												},
 												commit : function( data )
 												{
+                                                    // URL만 하는 경우 : undefined
 													if ( !data.anchor )
 														data.anchor = {};
 
+                                                    // this.getValue() : ''
 													data.anchor.name = this.getValue();
 												}
 											},
@@ -635,6 +686,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 													if ( !data.anchor )
 														data.anchor = {};
 
+                                                    // this.getValue() : ''
 													data.anchor.id = this.getValue();
 												}
 											}
@@ -1197,6 +1249,13 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			switch ( data.type || 'url' )
 			{
 				case 'url':
+                    var useScrap = this.getContentElement('info','useScrap').getValue();
+                    if (useScrap) {
+                        // div 안의 내용을 insert 하고 return
+                        editor.insertHtml($('#scrapResult').html());
+                        return;
+                    }
+                    
 					var protocol = ( data.url && data.url.protocol != undefined ) ? data.url.protocol : 'http://',
 						url = ( data.url && CKEDITOR.tools.trim( data.url.url ) ) || '';
 					attributes[ 'data-cke-saved-href' ] = ( url.indexOf( '/' ) === 0 ) ? url : protocol + url;
