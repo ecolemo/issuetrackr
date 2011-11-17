@@ -37,8 +37,9 @@ def image(request, resource_id):
     return response
 
 def extractSiteUrl(url):
-    import re
-    return re.search("(?P<url>https?://[^\s]+)/?", url).group("url")
+    import urlparse
+    o = urlparse.urlparse(url)
+    return o.scheme + '://' + o.hostname
 
 def extractImageUrls(url, soup):
     siteUrl = extractSiteUrl(url)
