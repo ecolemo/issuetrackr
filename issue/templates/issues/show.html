@@ -127,9 +127,20 @@ $(function() {
 	${issue.title}
 </h1>
 <div style="text-align: right; margin-top: 10px">
-<span id="vote-up">Up</span>|<span id="vote-down">Down</span>|<span id='vote-score'>${issue.vote_score}</span>|<span style="vertical-align:middle; padding:4px; margin-top:10px; margin-right: 5px; border: 1px solid;"><a href="/issues/${issue.id}/edit">수정</a></span>
+<span style="vertical-align:middle; padding:4px; margin-top:10px; margin-right: 5px; border: 1px solid;"><a href="/issues/${issue.id}/edit">수정</a></span>
 </div>
-<div class="issue_content">${issue.content}</div>
+<div>
+<table border="0">
+    <tr>
+        <td style="vertical-align: baseline; text-align: center;">
+            <span id="vote-up"><img src="/static/images/vote_up.png"/></span><br/>
+            <span id='vote-score' style='font-size:20px;'>${issue.vote_score}</span><br/>
+            <span id="vote-down"><img src="/static/images/vote_down.png"/></span><br/>
+        </td>
+        <td style="vertical-align: baseline;"><div class="issue_content">${issue.content}</div></td>
+    </tr>
+</table>
+</div>
 <div style="text-align:right; margin: 10px;">
     ${self.helper.avatar(issue.writer, 32)}<span class="writer_info">${issue.writer}</span><span class="date">${issue.updated}</span> &nbsp; <a href="/issues/${issue.id}/histories">변경기록</a><br/>
 </div>
