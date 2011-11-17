@@ -44,9 +44,15 @@ def extractSiteUrl(url):
 def extractImageUrls(url, soup):
     siteUrl = extractSiteUrl(url)
 
-    imageUrls = set([img['src'] for img in soup('img')])
+    imageUrls = []
+    for img in soup('img'):
+        try:
+            imageUrls.append(img['src'])
+        except: # wrong img tag problem
+            pass
+
     result = []
-    for e in imageUrls:
+    for e in set(imageUrls):
         if not e.startswith('http://') and not e.startswith('https://'):
             result.append(siteUrl + e)
         else:
@@ -66,8 +72,11 @@ def makeThumbnails(imageUrls):
     for imageUrl in imageUrls:
         fileName = imageUrl.replace('/','_')
         urlretrieve(imageUrl, tempfile_storage_path + fileName)
-        size = imageSize(fileName)
-        thumbnailCandidates.append({'url':imageUrl, 'fileName': fileName, 'width' : size[0], 'height':size[1]})
+        try:
+            size = imageSize(fileName)
+            thumbnailCandidates.append({'url':imageUrl, 'fileName': fileName, 'width' : size[0], 'height':size[1]})
+        except IOError: # bad image or unknown image format
+            pass
 
     top3 = sorted(thumbnailCandidates, imageCompare)[:3]
     for e in top3: makeThumbnailImage(e)
