@@ -17,10 +17,13 @@ def scrap(request, resource_id):
 
     title, imageUrls = scrapping(url)
     thumbnailImages = makeThumbnails(imageUrls)
+    siteUrl = extractSiteUrl(url)
 
     data = {
         'title':title,
-        'images':thumbnailImages
+        'images':thumbnailImages,
+        'url':url,
+        'site_url':siteUrl,
     }
 
     return render_to_json(data)
