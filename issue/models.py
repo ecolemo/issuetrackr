@@ -46,6 +46,9 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __unicode__(self):
+        return u'from %s :[%d][%s]' % (self.issue.title,self.id,self.writer.username)
+
 class IssueHistory(models.Model):
     target = models.ForeignKey(Issue)
     writer = models.ForeignKey(User)
