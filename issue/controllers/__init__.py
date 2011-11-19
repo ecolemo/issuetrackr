@@ -17,7 +17,7 @@ class IndexFeed(Feed):
         return item.title
 
     def item_description(self, item):
-        return item.content
+        return ""
 
     def item_link(self, item):
         return '/issues/' + str(item.id)
