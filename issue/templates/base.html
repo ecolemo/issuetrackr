@@ -10,9 +10,10 @@
 <%block name="head"/>
 <%!
 import md5
-from issue.models import Issue
+from issue.models import Issue,Tag
 issue_count = Issue.objects.count()
 resolved_count = Issue.objects.filter(status='resolved').count()
+tag_list = Tag.objects.all()
 %>
 <%namespace name="helper" file="/commons.html" inheritable="True"/>
 
@@ -74,10 +75,15 @@ resolved_count = Issue.objects.filter(status='resolved').count()
 				투표 중인 이슈 없음.
 			</div>
             </%block>
-			<div>
-				<h5>powered by <a href="http://ecolemo.com"><img style="width: 100px; vertical-align: bottom;" src="/static/images/ecolemo_logo.png"></a></h5>
-				
-			</div>
+            <div><H5>Recent Tags</H5></div>
+            <div>
+                %for tag in tag_list:
+                    <a href="/issues?tag=${tag}">${tag} x ${tag.issue_set.count()}</a><br/>
+                %endfor
+            </div>
+            <div>
+                <h5>powered by <a href="http://ecolemo.com"><img style="width: 100px; vertical-align: bottom;" src="/static/images/ecolemo_logo.png"></a></h5>
+            </div>
 		</div>
 		<div class="main">
 			${self.body()}
