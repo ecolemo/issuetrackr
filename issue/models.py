@@ -20,7 +20,7 @@ class Issue(models.Model):
     tags = models.ManyToManyField(Tag)
 
     def update_tags(self, tag_str):
-        self.tags.all().delete()
+        self.tags.clear()
         tags = tag_str.split(',')
         for tag in tags:
             if tag.strip() == '': continue
