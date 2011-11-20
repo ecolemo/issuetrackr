@@ -21,7 +21,6 @@ urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', issue.controllers.index),
-    url(r'.*_xml$', issue.controllers.IndexFeed()),
     url(r'', include('social_auth.urls')),
     (controller_resource_method_pattern, router(issue.controllers)),
     # Examples:
