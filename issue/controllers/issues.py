@@ -20,7 +20,7 @@ def index(request, resource_id):
         description = "Recent Issues"
         def items(self): return objects
         def item_title(self, item): return item.title
-        def item_description(self, item): return ""
+        def item_description(self, item): return item.content
         def item_link(self, item): return '/issues/' + str(item.id)
 
     if 'tag' in request.GET:
@@ -54,8 +54,8 @@ def show(request, resource_id):
         description = "Recent Issues"
         def get_object(self, request, resource_id): return issue
         def items(self): return Comment.objects.filter(issue=issue)
-        def item_title(self, item): return strip_tags(item.content)[:100]
-        def item_description(self, item): return ''
+        def item_title(self, item): return "comment : " + strip_tags(item.content)[:50]
+        def item_description(self, item): return item.content
         def item_link(self, item): return '/issues/%d#c-%d' % (issue.id, item.id)
 
     if request.user.is_anonymous():
