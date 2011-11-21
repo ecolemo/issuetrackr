@@ -13,52 +13,21 @@ def strip_tags(text):
 
 def index(request, resource_id):
     objects = Issue.objects.order_by('-updated')
+
+    class IndexFeed(Feed):
+        title = "IssueTrac.kr site index"
+        link = "/issue/"
+        description = "Recent Issues"
+        def items(self): return objects
+        def item_title(self, item): return item.title
+        def item_description(self, item): return ""
+        def item_link(self, item): return '/issues/' + str(item.id)
+
     if 'tag' in request.GET:
         for tag in request.GET.getlist('tag'):
             objects = objects.filter(tags__name=tag)
-    return render_to_response('issues/index.html', locals())
-
-class IndexFeed(Feed):
-    title = "IssueTrac.kr site index"
-    link = "/issue/"
-    description = "Recent Issues"
-    def items(self):
-        objects = Issue.objects.order_by('-updated')
-        return objects
-
-    def item_title(self, item):
-        return item.title
-
-    def item_description(self, item):
-        return ""
-
-    def item_link(self, item):
-        return '/issues/' + str(item.id)
-
-from django.shortcuts import get_object_or_404
-
-class ShowFeed(Feed):
-    title = "IssueTrac.kr issue"
-    link = "/issue/"
-    description = "Recent Issues"
-    def get_object(self, request, resource_id):
-        return get_object_or_404(Issue, pk=resource_id)
-
-    def items(self, obj):
-        objects = Comment.objects.filter(issue=obj)
-        return objects
-
-    def item_title(self, item):
-        return strip_tags(item.content)[:100]
-
-    def item_description(self, item):
-        return ''
-
-    def item_link(self, item):
-        return '/issues/' + str(item.id)
-
-index_xml = IndexFeed()
-show_xml = ShowFeed()
+    if request.format == 'xml': return IndexFeed()(request)
+    else: return render_to_response('issues/index.html', locals())
 
 @login_required
 def new(request, resource_id):
@@ -79,6 +48,16 @@ def show(request, resource_id):
     issue.read_count += 1
     issue.save()
 
+    class ShowFeed(Feed):
+        title = "IssueTrac.kr issue"
+        link = "/issue/"
+        description = "Recent Issues"
+        def get_object(self, request, resource_id): return issue
+        def items(self): return Comment.objects.filter(issue=issue)
+        def item_title(self, item): return strip_tags(item.content)[:100]
+        def item_description(self, item): return ''
+        def item_link(self, item): return '/issues/%d#c-%d' % (issue.id, item.id)
+
     if request.user.is_anonymous():
         user_vote = None
     else:
@@ -86,7 +65,9 @@ def show(request, resource_id):
             user_vote = issue.vote_set.get(voter=request.user)
         except ObjectDoesNotExist:
             user_vote = None
-    return render_to_response('issues/show.html', locals())
+
+    if request.format == 'xml': return ShowFeed()(request, resource_id)
+    else: return render_to_response('issues/show.html', locals())
 
 def edit(request, resource_id):
     csrf_token = csrf(request)['csrf_token']
