@@ -556,6 +556,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
                         id : 'useScrap',
                         label : 'Scrap',
                         onClick : function() {
+                            var checkScrap = this;
                             if (this.getValue() == true) {
                                 $('#scrapResult').css('background-color','#FCFCFC');
                                 $('#scrapResult').text('');
@@ -566,6 +567,13 @@ CKEDITOR.dialog.add( 'link', function( editor )
                                     url: '/scraper/_/scrap',
                                     data: ({url: url} ),
                                     success: function(msg) {
+                                        if (msg['status'] == 'error') {
+                                            alert('error');
+                                            checkScrap.setValue(false);
+                                            $('#scrapResult').text('no scrap result');
+                                            $('#scrapResult').css('background-color','#CCCCCC');
+                                            return;
+                                        }
                                         msg['summary'] = '';
                                         msg['id'] = '';
                                         if (msg.images.length != 0) {
@@ -582,16 +590,20 @@ CKEDITOR.dialog.add( 'link', function( editor )
                                         alert(msg);
                                     }
                                 });
-
+                                // show indicator
+                                $('#scrapResult').html("<div style='width:100%; height:100%; border: 1px solid; background: #FFFFFF url(/static/images/indicator.gif) no-repeat no-repeat center center;'></div>");
                             }
                             else {
+                                // hide indicator
+                                $('#scrapIndicator').css('visibility', 'hidden');
+                                $('#scrapResult').html('');
                                 $('#scrapResult').css('background-color','#CCCCCC');
                             }
                         }
                     },
                     {
                         type : 'html',
-                        html : "<div id='scrapResult' style='width:350px;height:100px; background-color: #CCCCCC;'></div>"
+                        html : "<div id='scrapResult' style='width:350px;height:100px; background-color: #CCCCCC;'><img id='scrapIndicator' src='/static/images/indicator.gif' style='vertical-align: middle; text-align: center; visibility: hidden;'></div>"
                     },
 					{
 						type : 'vbox',
