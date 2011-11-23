@@ -69,11 +69,13 @@ def show(request, resource_id):
     if request.format == 'xml': return ShowFeed()(request, resource_id)
     else: return render_to_response('issues/show.html', locals())
 
+@login_required
 def edit(request, resource_id):
     csrf_token = csrf(request)['csrf_token']
     issue = Issue.objects.get(id=resource_id)
     return render_to_response('issues/edit.html', locals())
 
+@login_required
 def update(request, resource_id):
     issue = Issue.objects.get(id=resource_id)
     issue.title = request.POST['title']
@@ -100,6 +102,7 @@ def history(request, resource_id):
     history = IssueHistory.objects.get(id=resource_id)
     return render_to_response('issues/history.html', locals())
 
+@login_required
 def restore(request, resource_id):
     history = IssueHistory.objects.get(id=resource_id)
     history.restore()
